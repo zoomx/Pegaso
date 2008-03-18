@@ -61,4 +61,45 @@ Public Const GetFile As String = "GF"
 Public Const GetDateTime As String = ""
 Public Const SetDateTime As String = ""
 
+
+
+'Structures and variables for PMM message
+Public Type typeRdCH4
+    MeanCH4 As Long 'Substitute Unsigned Short of C
+    SigmaCH4 As Long 'So this structure is 8 bytes instead of 4
+End Type
+
+Public Type DateRdCH4
+    Date As Long
+    ChansTrans As Byte
+    Dummy As Byte
+    RdCH4 As typeRdCH4
+End Type
+
+Public Type typeRdH2S
+    MeanH2S As Long 'Substitute Unsigned Short of C
+    SigmaH2S As Long 'So this structure is 8 bytes instead of 4
+End Type
+
+Public Type DateRdH2S
+    Date As Long
+    ChansTrans As Byte
+    Dummy As Byte
+    RdH2S As typeRdH2S
+End Type
+
 Public SensorType(7) As String
+
+Public Type DataRecord
+    Datagiorno As Long
+    Oraminuti As Long
+    DataMeas As Date
+    MeanCH4 As Long
+    SigmaCH4 As Long
+    MeanH2S As Long
+    SigmaH2S As Long
+    Temp As Double
+    Cond As Double
+    Press As Double
+End Type
+

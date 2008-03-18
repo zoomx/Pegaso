@@ -109,39 +109,39 @@ Public Function GetMigliaia() As String
     End If
 
 End Function
-Public Sub NewPath(Stringa As String)
+Public Sub NewPath(stringa As String)
 'Cambia drive e path contemporaneamente
 'Modificare per i drive di rete
 'Es. NewPath "d:\temp"
-    ChDrive (Left(Stringa, 3))
-    ChDir (Stringa)
+    ChDrive (Left(stringa, 3))
+    ChDir (stringa)
 End Sub
-Public Sub StampaAscii(Stringa As String)
+Public Sub StampaAscii(stringa As String)
     'Stampa il valore dei caratteri ASCII di una stringa
     'nella finestra di Debug
     Dim lStringa As Double
     Dim i As Integer
-    lStringa = Len(Stringa)
+    lStringa = Len(stringa)
     If lStringa = 0 Then Exit Sub
-    Debug.Print "Risposta"; Stringa; " ";
+    Debug.Print "Risposta"; stringa; " ";
     For i = 1 To lStringa
-        Debug.Print Asc(Mid(Stringa, i, 1));
+        Debug.Print Asc(Mid(stringa, i, 1));
     Next
     Debug.Print
 End Sub
-Public Function String2Ascii(Stringa As String) As String
+Public Function String2Ascii(stringa As String) As String
 'Converte una stringa nei corrispondenti valori ASCII
 'Non viene gestito il CHR$(0)
     Dim lStringa As Double
     Dim i As Integer
     Dim StringAscii As String
-    lStringa = Len(Stringa)
+    lStringa = Len(stringa)
     If lStringa = 0 Then Exit Function
     For i = 1 To lStringa
-        String2Ascii = String2Ascii + Asc(Mid(Stringa, i, 1)) + " "
+        String2Ascii = String2Ascii + Asc(Mid(stringa, i, 1)) + " "
     Next
 End Function
-Public Function Char2ascii(Stringa As String) As String
+Public Function Char2ascii(stringa As String) As String
 'Trasforma una stringa contenente caratteri ASCII e non
 'ASCII in stringa di codici di caratteri ASCII
 'Viene gestito anche il chr$(0)
@@ -149,12 +149,12 @@ Public Function Char2ascii(Stringa As String) As String
     Dim tStringa As String
     Dim i As Integer
     
-    lStringa = Len(Stringa)
+    lStringa = Len(stringa)
     For i = 1 To lStringa
-        If Mid(Stringa, i, 1) = Chr$(0) Then
+        If Mid(stringa, i, 1) = Chr$(0) Then
             tStringa = tStringa + " " + "00"
         Else
-            tStringa = tStringa + Str(Asc(Mid(Stringa, i, 1)))
+            tStringa = tStringa + Str(Asc(Mid(stringa, i, 1)))
         End If
     Next
     Char2ascii = tStringa
@@ -195,17 +195,17 @@ Public Function CeSpazio(Percorso As String, Nbytes As Long) As Boolean
     End If
     CeSpazio = VaBene
 End Function
-Public Function stripCrLf(Stringa As String) As String
+Public Function stripCrLf(stringa As String) As String
 'elimina i Cr e Lf finali in una stringa
     Dim i As Long
     
     For i = 1 To 2
-        If Right(Stringa, 1) = vbCr Or Right(Stringa, 1) = vbLf Then
-            Stringa = Left(Stringa, Len(Stringa) - 1)
+        If Right(stringa, 1) = vbCr Or Right(stringa, 1) = vbLf Then
+            stringa = Left(stringa, Len(stringa) - 1)
         End If
     Next
     
-    stripCrLf = Stringa
+    stripCrLf = stringa
 End Function
 Public Sub FinePerErrore()
     Dim Mes As String
@@ -368,7 +368,7 @@ Public Function InputComTimeOut(TimeOut As Integer) As String
 'Con TIMEOUT
     Dim TimeStop As Long
     Dim Linea As String
-    Dim dummy As String
+    Dim Dummy As String
     
         TimeStop = Timer + TimeOut
         fMain.MSComm1.InputLen = 1
@@ -378,12 +378,12 @@ Public Function InputComTimeOut(TimeOut As Integer) As String
         Loop Until (fMain.MSComm1.InBufferCount >= 1) Or (Timer > TimeStop)
         If fMain.MSComm1.InBufferCount >= 1 Then
             Linea = ""
-            dummy = ""
+            Dummy = ""
             TimeStop = Timer + TimeOut ' Imposta l'ora di fine
-            Do Until dummy = vbLf Or (Timer > TimeStop)
+            Do Until Dummy = vbLf Or (Timer > TimeStop)
                 DoEvents
-                dummy = fMain.MSComm1.Input
-                Linea = Linea + dummy
+                Dummy = fMain.MSComm1.Input
+                Linea = Linea + Dummy
             Loop
         Else
             Linea = "TimeOut"
@@ -398,7 +398,7 @@ Public Function InputComTimeOutTerm(TimeOut As Integer, Terminator As Byte) As S
 
         Dim TimeStop As Long
         Dim Linea As String
-        Dim dummy As String
+        Dim Dummy As String
 
         TimeStop = Timer + TimeOut
         fMain.MSComm1.InputLen = 1
@@ -407,12 +407,12 @@ Public Function InputComTimeOutTerm(TimeOut As Integer, Terminator As Byte) As S
         Loop Until (fMain.MSComm1.InBufferCount >= 1) Or (Timer > TimeStop)
         If fMain.MSComm1.InBufferCount >= 1 Then
             Linea = ""
-            dummy = ""
+            Dummy = ""
             TimeStop = Timer + TimeOut ' Imposta l'ora di fine
-            Do Until dummy = Chr(Terminator) Or (Timer > TimeStop)
+            Do Until Dummy = Chr(Terminator) Or (Timer > TimeStop)
                 DoEvents
-                dummy = fMain.MSComm1.Input
-                Linea = Linea + dummy
+                Dummy = fMain.MSComm1.Input
+                Linea = Linea + Dummy
             Loop
         Else
             Linea = "TimeOut"
@@ -441,7 +441,7 @@ Public Function InputComTimeOutBin(TimeOut As Integer, NumByte As Integer) As St
 '        End If
         Linea = fMain.MSComm1.Input
         If Linea <> "" Then
-            Debug.Print "inputCom--->"; Char2ascii(Linea)
+            'Debug.Print "inputCom--->"; Char2ascii(Linea)
         End If
         InputComTimeOutBin = Linea
 
@@ -491,17 +491,56 @@ Public Function InputComTimeOutBin2(TimeOut As Integer, NumByte As Integer) As S
     Next i
 
 End Function
+Public Function InputComTimeOutBin3(TimeOut As Integer) As Byte
+'Attende un input binario di un carattere senza terminatore
+'Con TIMEOUT
+    Dim TimeStop As Long
+    Dim Linea As Byte
+    'Dim dummy As String
+    
+        'fMain.MSComm1.InputMode = comInputModeBinary
+
+        TimeStop = Timer + TimeOut
+        fMain.MSComm1.InputLen = 1
+        Do
+            DoEvents
+        Loop Until (fMain.MSComm1.InBufferCount >= 1) Or (Timer > TimeStop)
+'        If fMain.MSComm1.InBufferCount >= NumByte Then
+'            linea = ""
+'        Else
+'            linea = "TimeOut"
+'        End If
+        Linea = Asc(fMain.MSComm1.Input)
+'        If Linea <> "" Then
+'            'Debug.Print "inputCom--->"; Char2ascii(Linea)
+'        End If
+        InputComTimeOutBin3 = Linea
+
+End Function
 
 Public Function bMID(matrice() As Byte, inizio As Long, lunghezza As Long) As String
 'Estrae una stringa da un vettore di bytes
 'Sintassi come istruzione MID
-    Dim Stringa As String
+    Dim stringa As String
     Dim i As Long
 
     For i = inizio To inizio + lunghezza - 1
-        Stringa = Stringa + Chr(matrice(i))
+        stringa = stringa + Chr(matrice(i))
         DoEvents
     Next
-    bMID = Stringa
+    bMID = stringa
+End Function
+
+Public Function GetNameFromDir(Dir As String) As String
+    Dim i As Long
+    Dim lasti As Long
+    Dim Dirr As String
+    Dirr = Dir
+    Do
+        lasti = i
+        i = InStr(Dir, "\")
+        Dir = Right(Dir, Len(Dir) - i)
+    Loop Until i = 0
+    GetNameFromDir = Dir
 End Function
 

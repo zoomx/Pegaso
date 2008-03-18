@@ -36,6 +36,9 @@ Public Sub Init()
     frmSplash.lblWarning = ""
 
     'Riempimento tabella SensorType
+    SensorType(0) = "Empty0"
+    SensorType(1) = "Empty1"
+    SensorType(2) = "Empty2"
     SensorType(3) = "First Methane Sensor"
     SensorType(4) = "Second Methane Sensor"
     SensorType(5) = "Third Methane Sensor"
