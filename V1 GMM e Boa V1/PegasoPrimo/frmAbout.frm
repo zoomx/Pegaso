@@ -52,14 +52,14 @@ Begin VB.Form frmAbout
    Begin VB.Image Image2 
       Height          =   240
       Left            =   360
-      Picture         =   "frmAbout.frx":074C
+      Picture         =   "frmAbout.frx":110C
       Top             =   1920
       Width           =   240
    End
    Begin VB.Image Image1 
       Height          =   480
       Left            =   5160
-      Picture         =   "frmAbout.frx":138E
+      Picture         =   "frmAbout.frx":1D4E
       Top             =   1800
       Width           =   480
    End

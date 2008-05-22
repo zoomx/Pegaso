@@ -17,7 +17,7 @@ Begin VB.Form fModem
       Caption         =   "&Rubrica"
       Height          =   500
       Left            =   1800
-      TabIndex        =   17
+      TabIndex        =   13
       Top             =   2400
       Width           =   975
    End
@@ -25,14 +25,14 @@ Begin VB.Form fModem
       Caption         =   "Composizione"
       Height          =   915
       Left            =   150
-      TabIndex        =   14
+      TabIndex        =   10
       Top             =   1170
       Width           =   2685
       Begin VB.OptionButton Option2 
          Caption         =   "A toni"
          Height          =   315
          Left            =   690
-         TabIndex        =   16
+         TabIndex        =   12
          Top             =   450
          Value           =   -1  'True
          Width           =   1035
@@ -41,7 +41,7 @@ Begin VB.Form fModem
          Caption         =   "A impulsi"
          Height          =   345
          Left            =   690
-         TabIndex        =   15
+         TabIndex        =   11
          Top             =   210
          Width           =   975
       End
@@ -50,7 +50,7 @@ Begin VB.Form fModem
       Caption         =   "&Annulla"
       Height          =   500
       Left            =   3480
-      TabIndex        =   12
+      TabIndex        =   8
       Top             =   2400
       Width           =   1005
    End
@@ -58,7 +58,7 @@ Begin VB.Form fModem
       Caption         =   "&Chiama"
       Height          =   500
       Left            =   120
-      TabIndex        =   11
+      TabIndex        =   7
       Top             =   2400
       Width           =   1005
    End
@@ -66,13 +66,13 @@ Begin VB.Form fModem
       Caption         =   "Configurazione porta"
       Height          =   585
       Left            =   2940
-      TabIndex        =   9
+      TabIndex        =   5
       Top             =   1500
       Width           =   1605
       Begin VB.TextBox txtPortSettings 
          Height          =   285
          Left            =   210
-         TabIndex        =   10
+         TabIndex        =   6
          Text            =   "19200,n,8,1"
          Top             =   210
          Width           =   1215
@@ -82,110 +82,45 @@ Begin VB.Form fModem
       Caption         =   "N. Telefono"
       Height          =   915
       Left            =   150
-      TabIndex        =   5
+      TabIndex        =   1
       Top             =   150
       Width           =   2685
       Begin VB.TextBox txtNumero 
          Height          =   285
          Left            =   420
-         TabIndex        =   6
+         TabIndex        =   2
          Top             =   360
          Width           =   1845
       End
    End
    Begin VB.Frame Frame1 
       Caption         =   "Modem su COM"
-      Height          =   1395
+      Height          =   795
       Left            =   2940
       TabIndex        =   0
       Top             =   90
       Width           =   1605
-      Begin VB.OptionButton oCom 
-         Caption         =   "COM4"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   195
-         Index           =   3
-         Left            =   450
-         TabIndex        =   4
-         Top             =   1020
-         Width           =   915
-      End
-      Begin VB.OptionButton oCom 
-         Caption         =   "COM3"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   195
-         Index           =   2
-         Left            =   450
-         TabIndex        =   3
-         Top             =   750
-         Width           =   855
-      End
-      Begin VB.OptionButton oCom 
-         Caption         =   "COM1"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   195
-         Index           =   0
-         Left            =   450
-         TabIndex        =   2
+      Begin VB.Label lCOM 
+         Caption         =   "COM"
+         Height          =   375
+         Left            =   240
+         TabIndex        =   14
          Top             =   240
-         Value           =   -1  'True
-         Width           =   855
-      End
-      Begin VB.OptionButton oCom 
-         Caption         =   "COM2"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   195
-         Index           =   1
-         Left            =   450
-         TabIndex        =   1
-         Top             =   510
-         Width           =   915
+         Width           =   975
       End
    End
    Begin VB.Frame Frame3 
       Caption         =   "Stringa inizializzazione modem"
       Height          =   885
       Left            =   960
-      TabIndex        =   7
+      TabIndex        =   3
       Top             =   3000
       Visible         =   0   'False
       Width           =   2655
       Begin VB.TextBox txtModemString 
          Height          =   285
          Left            =   360
-         TabIndex        =   8
+         TabIndex        =   4
          Top             =   330
          Width           =   1935
       End
@@ -195,7 +130,7 @@ Begin VB.Form fModem
       BorderStyle     =   1  'Fixed Single
       Height          =   2115
       Left            =   60
-      TabIndex        =   13
+      TabIndex        =   9
       Top             =   120
       Visible         =   0   'False
       Width           =   4575
@@ -228,12 +163,7 @@ Private Sub Form_Load()
     
     txtModemString.Text = ModemString
     'Stabiliamo una porta COM iniziale
-    For i = 0 To 4
-        If oCom(i).Value = True Then
-            ComPort = i + 1
-            Exit For
-        End If
-    Next
+    lCOM.Caption = "COM" & ComPort
     
     Messaggio = sReadINI("Modem", "UltimoNumero", FileIni)
     fModem.txtNumero.Text = Messaggio
@@ -242,7 +172,7 @@ Private Sub Form_Load()
     txtPortSettings = Messaggio '+ ",n,8,1"
     i = Val(sReadINI("Modem", "UltimaCom", FileIni))
     If i = 0 Then i = 1
-    oCom(i - 1).Value = True
+    ComPort = i
     fMain.MSComm1.RThreshold = 0
     fMain.MSComm1.SThreshold = 0
 
@@ -283,7 +213,7 @@ End Sub
 
 Private Sub bChiama_Click()
     Dim i As Integer
-    Dim Risposta As String
+    Dim risposta As String
     Dim Tempo0 As Long
     Dim DiffTempo As Long
     Dim Contatore As Long
@@ -305,18 +235,20 @@ Private Sub bChiama_Click()
     fMain.MSComm1.Handshaking = comRTS
     fMain.MSComm1.RTSEnable = True
     
+    fMain.Text1.Text = fMain.Text1.Text + "Opening COM port" + vbCrLf
     OpenCom
     
+
     
     
     'controlla che la porta sia valida o esistente
     If ComOk = False Then
-        'MsgBox ("Porta COM non valida o in uso!")
+        MsgBox ("COM port not valid or in use!!")
         bChiama.Enabled = True
         ChiamaFlag = False
         Exit Sub
     End If
-    
+    fMain.Text1.Text = fMain.Text1.Text + "COM port opened" + vbCrLf
     
     
     'Registra il numero di telefono immesso
@@ -369,6 +301,7 @@ Private Sub bChiama_Click()
     'Sleep (50)
     If ChiamaFlag = False Then
         If fDebug Then Print #fdn, "ANNULLATO!"
+        fMain.Text1.Text = fMain.Text1.Text + "Aborted" + vbCrLf
         Exit Sub
     End If
 
@@ -393,36 +326,40 @@ Private Sub bChiama_Click()
 
     If ChiamaFlag = False Then
         If fDebug Then Print #fdn, "ANNULLATO!"
+        fMain.Text1.Text = fMain.Text1.Text + "Aborted" + vbCrLf
         Exit Sub
     End If
 
+    fMain.Text1.Text = fMain.Text1.Text + "Setting Modem" + vbCrLf
     fMain.MSComm1.Output = "ATL3" + vbCr
     'Sleep (100)
 
-    Risposta = UCase(InputComTimeOut(2))
-    If fDebug Then Print #fdn, "1l3 "; Risposta
-    Debug.Print "1e0 "; Risposta;
-    Risposta = UCase(InputComTimeOut(2))
-    If fDebug Then Print #fdn, "2 "; Risposta
-    Debug.Print "2 "; Risposta;
+    risposta = UCase(InputComTimeOut(2))
+    If fDebug Then Print #fdn, "1l3 "; risposta
+    Debug.Print "1e0 "; risposta;
+    risposta = UCase(InputComTimeOut(2))
+    If fDebug Then Print #fdn, "2 "; risposta
+    Debug.Print "2 "; risposta;
 
     If ChiamaFlag = False Then
         Debug.Print "ANNULLATO!"
+        fMain.Text1.Text = fMain.Text1.Text + "Aborted" + vbCrLf
         Exit Sub
     End If
 
     fMain.MSComm1.Output = "ATM2" + vbCr
     'Sleep (100)
 
-    Risposta = UCase(InputComTimeOut(2))
-    If fDebug Then Print #fdn, "1m2 "; Risposta
-    Debug.Print "1e0 "; Risposta;
-    Risposta = UCase(InputComTimeOut(2))
-    If fDebug Then Print #fdn, "2 "; Risposta
-    Debug.Print "2 "; Risposta;
+    risposta = UCase(InputComTimeOut(2))
+    If fDebug Then Print #fdn, "1m2 "; risposta
+    Debug.Print "1e0 "; risposta;
+    risposta = UCase(InputComTimeOut(2))
+    If fDebug Then Print #fdn, "2 "; risposta
+    Debug.Print "2 "; risposta;
 
     If ChiamaFlag = False Then
         Debug.Print "ANNULLATO!"
+        fMain.Text1.Text = fMain.Text1.Text + "Aborted" + vbCrLf
         Exit Sub
     End If
 
@@ -430,43 +367,46 @@ Private Sub bChiama_Click()
     fMain.MSComm1.Output = "AT E0" + vbCr
     'Sleep (100)
 
-    Risposta = UCase(InputComTimeOut(2))
-    If fDebug Then Print #fdn, "1e0 "; Risposta
-    Debug.Print "1e0 "; Risposta;
-    Risposta = UCase(InputComTimeOut(2))
-    If fDebug Then Print #fdn, "2 "; Risposta
-    Debug.Print "2 "; Risposta;
+    risposta = UCase(InputComTimeOut(2))
+    If fDebug Then Print #fdn, "1e0 "; risposta
+    Debug.Print "1e0 "; risposta;
+    risposta = UCase(InputComTimeOut(2))
+    If fDebug Then Print #fdn, "2 "; risposta
+    Debug.Print "2 "; risposta;
 
     If ChiamaFlag = False Then
         Debug.Print "ANNULLATO!"
+        fMain.Text1.Text = fMain.Text1.Text + "Aborted" + vbCrLf
         Exit Sub
     End If
 
     fMain.MSComm1.Output = "AT X3" + vbCr
     'Sleep (100)
-    Risposta = UCase(InputComTimeOut(2))
-    If fDebug Then Print #fdn, "1x1 "; Risposta
-    Debug.Print "1x1 "; Risposta;
-    Risposta = UCase(InputComTimeOut(2))
-    If fDebug Then Print #fdn, "2 "; Risposta
-    Debug.Print "2 "; Risposta;
+    risposta = UCase(InputComTimeOut(2))
+    If fDebug Then Print #fdn, "1x1 "; risposta
+    Debug.Print "1x1 "; risposta;
+    risposta = UCase(InputComTimeOut(2))
+    If fDebug Then Print #fdn, "2 "; risposta
+    Debug.Print "2 "; risposta;
 
     If ChiamaFlag = False Then
         Debug.Print "ANNULLATO!"
+        fMain.Text1.Text = fMain.Text1.Text + "Aborted" + vbCrLf
         Exit Sub
     End If
 
     fMain.MSComm1.Output = "AT V1" + vbCr
     'Sleep (100)
-    Risposta = UCase(InputComTimeOut(2))
-    If fDebug Then Print #fdn, "1v1 "; Risposta;
-    Debug.Print "1v1 "; Risposta;
-    Risposta = UCase(InputComTimeOut(2))
-    If fDebug Then Print #fdn, "2 "; Risposta;
-    Debug.Print "2 "; Risposta;
+    risposta = UCase(InputComTimeOut(2))
+    If fDebug Then Print #fdn, "1v1 "; risposta;
+    Debug.Print "1v1 "; risposta;
+    risposta = UCase(InputComTimeOut(2))
+    If fDebug Then Print #fdn, "2 "; risposta;
+    Debug.Print "2 "; risposta;
 
     If ChiamaFlag = False Then
         Debug.Print "ANNULLATO!"
+        fMain.Text1.Text = fMain.Text1.Text + "Aborted" + vbCrLf
         Exit Sub
     End If
 
@@ -475,15 +415,16 @@ Private Sub bChiama_Click()
     'azzera il buffer di input
     'fMain.MSComm1.InBufferCount = 0
 
-    Risposta = UCase(InputComTimeOut(2))
-    If fDebug Then Print #fdn, "1q0 "; Risposta
-    Debug.Print "1q0 "; Risposta;
-    Risposta = UCase(InputComTimeOut(2))
-    If fDebug Then Print #fdn, "2 "; Risposta
-    Debug.Print "2 "; Risposta;
+    risposta = UCase(InputComTimeOut(2))
+    If fDebug Then Print #fdn, "1q0 "; risposta
+    Debug.Print "1q0 "; risposta;
+    risposta = UCase(InputComTimeOut(2))
+    If fDebug Then Print #fdn, "2 "; risposta
+    Debug.Print "2 "; risposta;
 
     If ChiamaFlag = False Then
         Debug.Print "ANNULLATO!"
+        fMain.Text1.Text = fMain.Text1.Text + "Aborted" + vbCrLf
         Exit Sub
     End If
 
@@ -507,6 +448,7 @@ Private Sub bChiama_Click()
     
     If ChiamaFlag = False Then
         Debug.Print "ANNULLATO!"
+        fMain.Text1.Text = fMain.Text1.Text + "Aborted" + vbCrLf
         Exit Sub
     End If
 
@@ -523,19 +465,22 @@ Private Sub bChiama_Click()
 
     If ChiamaFlag = False Then
         Debug.Print "ANNULLATO!"
+        fMain.Text1.Text = fMain.Text1.Text + "Aborted" + vbCrLf
         Exit Sub
     End If
 
 
-    i = InStr(Risposta, "OK")
+    i = InStr(risposta, "OK")
     If i = 0 Then
-        MsgBox ("Il modem non risponde!")
+        MsgBox ("Modem doesn't answer!")
+        fMain.Text1.Text = fMain.Text1.Text + "Modem doesn't answer! Aborted" + vbCrLf
         Exit Sub
     End If
 
     'Label1.Caption = Label1.Caption + "Il modem ha risposto! " + Risposta + vbCrLf
-    Label1.Caption = Label1.Caption + "Chiamata numero " _
+    Label1.Caption = Label1.Caption + "Calling " _
     + txtNumero.Text + vbCrLf
+    fMain.Text1.Text = fMain.Text1.Text + "Calling " + txtNumero.Text + vbCrLf
     'msgbog (Risposta)
     'azzera il buffer di input
     Sleep (100)
@@ -547,21 +492,23 @@ Private Sub bChiama_Click()
         fMain.MSComm1.Output = "ATDT" + Trim(txtNumero.Text) + vbCr
     End If
     
-    Label1.Caption = Label1.Caption + "Attesa connessione modem remoto" + vbCrLf
+    Label1.Caption = Label1.Caption + "Waiting for remote modem" + vbCrLf
+    fMain.Text1.Text = fMain.Text1.Text + "Waiting for remote modem" + vbCrLf
     
     Tempo0 = Timer
 retry:
-    Risposta = UCase(InputComTimeOut(10))
-    Debug.Print "3 "; Risposta;
-    If fDebug Then Print #fdn, "3 "; Risposta
+    risposta = UCase(InputComTimeOut(10))
+    Debug.Print "3 "; risposta;
+    If fDebug Then Print #fdn, "3 "; risposta
     
     If ChiamaFlag = False Then
         Debug.Print "ANNULLATO!"
+        fMain.Text1.Text = fMain.Text1.Text + "Aborted" + vbCrLf
         Exit Sub
     End If
     
-    If Left(Risposta, 1) < " " Then GoTo retry
-    If Risposta = "TIMEOUT" Then
+    If Left(risposta, 1) < " " Then GoTo retry
+    If risposta = "TIMEOUT" Then
         'controllo timeout
         If Timer < Contatore Then       '??????Contatore non è inizializzato!!!
             DiffTempo = Timer + 86400 - Tempo0
@@ -573,48 +520,49 @@ retry:
     End If
     
     'Risposta = Left(Risposta, Len(Risposta) - 2)
-    Messaggio = Risposta
-    Risposta = Left(Risposta, 4)
-
-    Select Case Risposta
+    Messaggio = risposta
+    risposta = Left(risposta, 4)
+    fMain.Text1.Text = fMain.Text1.Text + risposta + vbCrLf
+    Select Case risposta
         Case "CONNECT"
             'MsgBox "Connect" + Risposta
-            Label1.Caption = Label1.Caption + "Connessione effettuata" + vbCrLf
+            Label1.Caption = Label1.Caption + "Remote Modem Connected" + vbCrLf
             Connetti
             Me.Hide
             Unload Me
+            fMain.lStatus.Caption = "Remote Modem Connected"
             fMain.Show
             Exit Sub
         Case "CONN"
             'MsgBox "Conn" + Risposta
-            Label1.Caption = Label1.Caption + "Connessione effettuata" + vbCrLf
+            Label1.Caption = Label1.Caption + "Remote Modem Connected" + vbCrLf
             Connetti
             Me.Hide
             Unload Me
             Exit Sub
 
         Case "BUSY"
-            MsgBox "Linea occupata. Riprovare più tardi" '+ Risposta
+            MsgBox "Line Busy" '+ Risposta
             GoTo Fallimento
         Case "NO CARRIER"
-            MsgBox "Il modem remoto non ha risposto correttamente, nessuna portante" '+ Risposta
+            MsgBox "No Carrier!" '+ Risposta
             GoTo Fallimento
         Case "NO C"
-            MsgBox "Il modem remoto non ha risposto correttamente, nessuna portante" '+ Risposta
+            MsgBox "No Carrier!" '+ Risposta
             GoTo Fallimento
         Case "NO DIALTONE"
-            MsgBox "Manca il tono di linea libera" + Messaggio
+            MsgBox "No Dial Tone!" + Messaggio
             GoTo Fallimento
         Case "NO D"
-            MsgBox "Manca il tono di linea libera" + Messaggio
+            MsgBox "No Dial Tone!" + Messaggio
             GoTo Fallimento
         Case "DELA"
-            MsgBox "Modem in modalità " + Messaggio
+            MsgBox "Modem in Delayed mode! " + Messaggio
             GoTo Fallimento
         Case "ATDT"
             GoTo retry
         Case Else
-            MsgBox "Risposta modem locale errata! " + Messaggio
+            MsgBox "Wrong answer from local modem! " + Messaggio
             GoTo Fallimento
     End Select
     
@@ -649,14 +597,10 @@ Exit Sub
 
 End Sub
 
-Private Sub oCom_Click(Index As Integer)
-    ComPort = Index + 1
-    CfgCon.ComPort = ComPort
-End Sub
 Private Sub Connetti()
     Dim Intero As Integer
-    Dim Risposta As String
-    Dim Stringa As String
+    Dim risposta As String
+    Dim stringa As String
     Dim i As Long
     Dim iMH4 As Integer
     Dim iVersione As Integer
@@ -664,7 +608,7 @@ Private Sub Connetti()
     fMain.MSComm1.InBufferCount = 0
     fMain.MSComm1.Output = Chr$(3)
 
-    If Risposta = "" Then
+    If risposta = "" Then
         Messaggio = "Il modem ha risposto ma la centralina " + Versione + " non risponde." + vbCrLf
         Messaggio = Messaggio + "Potrebbe trattarsi di un problema della centralina o di" + vbCrLf
         Messaggio = Messaggio + "configurazione del modem." + vbCrLf
@@ -680,9 +624,9 @@ Private Sub Connetti()
     End If
                          
     'controlla se nella risposta c'e' Poseidon o Versione
-    iVersione = InStr(Risposta, Versione)
+    iVersione = InStr(risposta, Versione)
     If iVersione = 0 Then
-        Messaggio = "Il modem ha risposto ma la centralina " + Versione + " ha dato una risposta errata->" + Risposta + vbCrLf
+        Messaggio = "Il modem ha risposto ma la centralina " + Versione + " ha dato una risposta errata->" + risposta + vbCrLf
         Messaggio = Messaggio + "Potrebbe trattarsi di un problema della centralina o di" + vbCrLf
         Messaggio = Messaggio + "configurazione del modem." + vbCrLf
         Messaggio = Messaggio + "Riprovo ?"

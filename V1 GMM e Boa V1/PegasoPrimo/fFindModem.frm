@@ -8,15 +8,33 @@ Begin VB.Form fFindModem
    LinkTopic       =   "Form1"
    ScaleHeight     =   3195
    ScaleWidth      =   3450
+   Begin VB.CommandButton bQuit 
+      Caption         =   "&Quit"
+      Height          =   495
+      Left            =   2760
+      TabIndex        =   6
+      Top             =   120
+      Width           =   615
+   End
    Begin VB.CommandButton bStart 
       Caption         =   "&Start"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   495
-      Left            =   2280
+      Left            =   1800
       TabIndex        =   5
       Top             =   120
-      Width           =   975
+      Width           =   855
    End
    Begin VB.ComboBox cChooseModem 
+      Enabled         =   0   'False
       Height          =   315
       Left            =   600
       TabIndex        =   3
@@ -45,7 +63,7 @@ Begin VB.Form fFindModem
       Caption         =   "Push start"
       BeginProperty Font 
          Name            =   "MS Sans Serif"
-         Size            =   15
+         Size            =   13.5
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
@@ -53,7 +71,7 @@ Begin VB.Form fFindModem
          Strikethrough   =   0   'False
       EndProperty
       Height          =   375
-      Left            =   240
+      Left            =   0
       TabIndex        =   4
       Top             =   120
       Width           =   1695
@@ -74,9 +92,14 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+Private Sub bQuit_Click()
+    Unload Me
+    fMain.Show
+End Sub
+
 Private Sub bStart_Click()
-Dim i As Integer
-Dim j As Integer
+Dim I As Integer
+Dim J As Integer
 Dim coms(10) As Integer
 Dim risposta As String
 
@@ -84,39 +107,60 @@ lMessage.Caption = "WAIT!"
 
 'Find all coms from 1 to 10
 On Error GoTo errore
-j = 1
-For i = 1 To 10
+J = 1
+For I = 1 To 20
     ComOk = True
-    fMain.MSComm1.CommPort = i
+    fMain.MSComm1.CommPort = I
     fMain.MSComm1.PortOpen = True
         If ComOk = True Then
-            tCOM = tCOM + "COM" + Str(i) + vbCrLf
-            coms(j) = i
-            j = j + 1
+            tCOM = tCOM + "COM" + Str(I) + vbCrLf
+            coms(J) = I
+            J = J + 1
             fMain.MSComm1.PortOpen = False
         End If
-Next i
+Next I
 
-If j > 1 Then
-    For i = 1 To j - 1
-        fMain.MSComm1.CommPort = coms(i)
+If J > 1 Then
+    For I = 1 To J - 1
+        fMain.MSComm1.CommPort = coms(I)
+        fMain.MSComm1.Settings = "9600,8,n,1"
         fMain.MSComm1.PortOpen = True
-        risposta = MandaComando("ATI", 1)
+        risposta = MandaComando("I", 1)
+        Debug.Print risposta
         If risposta <> "" Then
             tModem = tModem + risposta + vbCrLf
             'aggiungere il modem alla lista
+            cChooseModem.AddItem ("COM" & Str(coms(I)))
+            'oppure
+            'cChooseModem.AddItem (risposta)
         Else
             tModem = tModem + "no modem found" + vbCrLf
         End If
-    Next i
+        fMain.MSComm1.PortOpen = False
+        'cChooseModem.AddItem ("COM" & Str(i))
+    Next I
 End If
-
+cChooseModem.Enabled = True
 lMessage.Caption = "Choose"
 
 errore:
     ComOk = False
     Resume Next
 
+End Sub
+
+Private Sub cChooseModem_Click()
+    Dim stringa As String
+    Dim Index As Integer
+    stringa = cChooseModem.Text
+    'Debug.Print stringa
+    stringa = Mid(stringa, 4)
+    'Debug.Print stringa
+    Index = Val(stringa)
+    'Debug.Print Index
+    ComPort = Index
+    'Debug.Print ComPort
+    fMain.bModem.Enabled = True
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)

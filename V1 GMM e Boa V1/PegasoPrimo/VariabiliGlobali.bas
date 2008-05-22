@@ -103,3 +103,19 @@ Public Type DataRecord
     Press As Double
 End Type
 
+Public Type DataRecordTEC
+    Datagiorno As Long
+    Oraminuti As Long
+    DataMeas As Date
+    Reboots As Byte
+    UsedMem As Double
+    FreeMem As Double
+    Flags As Byte
+    BattVol As Single
+    BattCurr As Single
+    DacsT As Single
+    BattT As Single
+    DacsP As Single
+    BattP As Single
+End Type
+

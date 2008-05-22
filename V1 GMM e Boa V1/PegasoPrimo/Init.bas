@@ -2,6 +2,7 @@ Attribute VB_Name = "Init"
 Option Explicit
 
 Private Sub Main()
+    Dim i As Integer
   'show the splash screen
    frmSplash.Show
    'Execute Init instructions
@@ -12,7 +13,12 @@ Private Sub Main()
    fMain.Show
    DoEvents
   'perform any other startup functions as required by your program
-  '{code}
+    i = Val(sReadINI("Modem", "UltimaCom", FileIni))
+    If i = 0 Then
+        'There is not a COM port defined
+        fMain.bModem.Enabled = False
+    End If
+
   'unload the splash screen and free its memory
    Unload frmSplash
    Set frmSplash = Nothing
