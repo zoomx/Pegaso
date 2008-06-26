@@ -3,37 +3,80 @@ Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "ComDlg32.OCX"
 Object = "{648A5603-2C6E-101B-82B6-000000000014}#1.1#0"; "MSCOMM32.OCX"
 Begin VB.Form fMain 
    Caption         =   "Pegaso I"
-   ClientHeight    =   6615
+   ClientHeight    =   6375
    ClientLeft      =   3405
    ClientTop       =   2340
-   ClientWidth     =   9600
+   ClientWidth     =   8820
    Icon            =   "Main.frx":0000
    LinkTopic       =   "Form1"
-   ScaleHeight     =   6615
-   ScaleWidth      =   9600
+   ScaleHeight     =   6375
+   ScaleWidth      =   8820
    StartUpPosition =   2  'CenterScreen
+   Begin VB.CommandButton bCrcTest 
+      Caption         =   "CRC test"
+      Height          =   495
+      Left            =   3600
+      TabIndex        =   21
+      Top             =   5640
+      Width           =   855
+   End
+   Begin VB.CommandButton bClear 
+      Caption         =   "Clear Txt"
+      Height          =   375
+      Left            =   6720
+      TabIndex        =   20
+      Top             =   6000
+      Width           =   855
+   End
+   Begin VB.CommandButton bActivate 
+      Caption         =   "Activate"
+      Height          =   375
+      Left            =   6720
+      TabIndex        =   19
+      Top             =   5520
+      Width           =   855
+   End
+   Begin VB.CommandButton bCloseComm 
+      Caption         =   "Close Communication"
+      Height          =   615
+      Left            =   240
+      Style           =   1  'Graphical
+      TabIndex        =   4
+      Top             =   3480
+      Width           =   1455
+   End
+   Begin VB.CommandButton bGetTodayFiles 
+      Caption         =   "Get Yesterday files"
+      Enabled         =   0   'False
+      Height          =   495
+      Left            =   240
+      Style           =   1  'Graphical
+      TabIndex        =   3
+      Top             =   2040
+      Width           =   1215
+   End
    Begin VB.Frame Frame2 
       Caption         =   "Status"
       Height          =   615
       Left            =   2520
-      TabIndex        =   15
+      TabIndex        =   17
       Top             =   240
       Width           =   3615
       Begin VB.Label lStatus 
          Caption         =   "Not Connected"
          Height          =   255
          Left            =   240
-         TabIndex        =   16
+         TabIndex        =   18
          Top             =   240
          Width           =   3255
       End
    End
    Begin VB.CommandButton bTranslatePTM 
       Caption         =   "Translate PTM Data"
-      Height          =   495
-      Left            =   240
-      TabIndex        =   14
-      Top             =   4440
+      Height          =   375
+      Left            =   1560
+      TabIndex        =   16
+      Top             =   5520
       Width           =   1815
    End
    Begin VB.PictureBox Picture1 
@@ -46,56 +89,59 @@ Begin VB.Form fMain
       Picture         =   "Main.frx":0CCA
       ScaleHeight     =   480
       ScaleWidth      =   510
-      TabIndex        =   13
+      TabIndex        =   15
       Top             =   0
       Width           =   515
    End
    Begin VB.CommandButton bRymodem 
       Caption         =   "Receive &Ymodem"
+      Enabled         =   0   'False
       Height          =   495
-      Left            =   2520
-      TabIndex        =   12
-      Top             =   5640
+      Left            =   240
+      TabIndex        =   14
+      Top             =   3000
       Width           =   1455
    End
    Begin MSComDlg.CommonDialog CmDialog1 
-      Left            =   9120
-      Top             =   720
+      Left            =   6480
+      Top             =   120
       _ExtentX        =   847
       _ExtentY        =   847
       _Version        =   393216
    End
    Begin VB.CommandButton bTranslate 
       Caption         =   "&Translate PMM Data"
-      Height          =   495
-      Left            =   240
-      TabIndex        =   11
-      Top             =   3960
+      Height          =   375
+      Left            =   1560
+      TabIndex        =   13
+      Top             =   6000
       Width           =   1815
    End
    Begin VB.CommandButton bTerminal 
       Caption         =   "&Open Terminal"
       Height          =   735
-      Left            =   240
+      Left            =   5400
       Picture         =   "Main.frx":11CE
       Style           =   1  'Graphical
-      TabIndex        =   10
-      Top             =   3240
+      TabIndex        =   12
+      Top             =   5520
       Width           =   1215
    End
    Begin VB.CommandButton bEnd 
       Caption         =   "&End"
-      Height          =   375
-      Left            =   8520
-      TabIndex        =   9
-      Top             =   5760
+      Height          =   855
+      Left            =   7920
+      Picture         =   "Main.frx":14D8
+      Style           =   1  'Graphical
+      TabIndex        =   8
+      Top             =   5520
       Width           =   735
    End
    Begin VB.CommandButton bFindModem 
       Caption         =   "&Find Modem"
       Height          =   495
       Left            =   240
-      TabIndex        =   8
+      TabIndex        =   7
       Top             =   5760
       Width           =   1215
    End
@@ -103,15 +149,15 @@ Begin VB.Form fMain
       Caption         =   "&Modem Call"
       Height          =   855
       Left            =   240
-      Picture         =   "Main.frx":14D8
+      Picture         =   "Main.frx":1922
       Style           =   1  'Graphical
-      TabIndex        =   7
-      Top             =   960
+      TabIndex        =   1
+      Top             =   720
       Width           =   1215
    End
    Begin MSCommLib.MSComm MSComm1 
-      Left            =   9120
-      Top             =   0
+      Left            =   6960
+      Top             =   120
       _ExtentX        =   1005
       _ExtentY        =   1005
       _Version        =   393216
@@ -124,7 +170,7 @@ Begin VB.Form fMain
       Height          =   495
       Left            =   240
       TabIndex        =   6
-      Top             =   2760
+      Top             =   4920
       Visible         =   0   'False
       Width           =   1215
    End
@@ -133,21 +179,23 @@ Begin VB.Form fMain
       Height          =   495
       Left            =   240
       TabIndex        =   5
-      Top             =   2280
+      Top             =   4440
       Visible         =   0   'False
       Width           =   1215
    End
    Begin VB.Frame Frame1 
       Height          =   4455
-      Left            =   2280
-      TabIndex        =   2
-      Top             =   1080
+      Left            =   1800
+      TabIndex        =   9
+      Top             =   960
       Width           =   6855
       Begin VB.TextBox Text1 
-         Height          =   4575
+         Height          =   3735
          Left            =   240
-         TabIndex        =   4
-         Top             =   600
+         MultiLine       =   -1  'True
+         ScrollBars      =   3  'Both
+         TabIndex        =   11
+         Top             =   480
          Width           =   6375
       End
       Begin VB.Label labelText 
@@ -163,19 +211,19 @@ Begin VB.Form fMain
          EndProperty
          Height          =   255
          Left            =   2880
-         TabIndex        =   3
+         TabIndex        =   10
          Top             =   240
          Visible         =   0   'False
          Width           =   1215
       End
    End
    Begin VB.CommandButton bConnect 
-      Caption         =   "&Connect"
+      Caption         =   "&Connect GMM"
+      Enabled         =   0   'False
       Height          =   495
       Left            =   240
-      TabIndex        =   1
-      Top             =   1800
-      Visible         =   0   'False
+      TabIndex        =   2
+      Top             =   1560
       Width           =   1215
    End
    Begin VB.Label Label1 
@@ -203,6 +251,60 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+Private Sub bActivate_Click()
+    Static eEnabled As Boolean
+    
+    If eEnabled = False Then
+    
+        bGetTodayFiles.Enabled = True
+        bConnect.Enabled = True
+        bGetTodayFiles.Enabled = True
+        bRymodem.Enabled = True
+        eEnabled = True
+    Else
+        bGetTodayFiles.Enabled = False
+        bConnect.Enabled = False
+        bGetTodayFiles.Enabled = False
+        bRymodem.Enabled = False
+        eEnabled = False
+    End If
+
+End Sub
+
+Private Sub bClear_Click()
+    Text1.Text = ""
+End Sub
+
+Private Sub bCloseComm_Click()
+    CloseCom
+    bConnect.Enabled = False
+    bGetTodayFiles.Enabled = False
+    lStatus.Caption = "Not Connected"
+End Sub
+
+Private Sub bCrcTest_Click()
+    
+    Dim sMessage As String
+    Dim iCRC As Long
+    'CRC16Setup
+    'TestCRC16
+    
+    sMessage = "123456789"
+    iCRC = CRC16(sMessage)
+    Debug.Print "crc16(" & sMessage & ")=" & Hex(iCRC) & " BB3D"
+    CRC16Setup
+    iCRC = CRC16(sMessage)
+    Debug.Print "crc16(" & sMessage & ")=" & Hex(iCRC) & " BB3D"
+    iCRC = CRC16ter(sMessage)
+    Debug.Print "crc16ter(" & sMessage & ")=" & Hex(iCRC) & " BB3D"
+    iCRC = CRC16A(sMessage)
+    Debug.Print "crc16a(" & sMessage & ")=" & Hex(iCRC) & " BB3D"
+    iCRC = CalcCRC(sMessage)
+    Debug.Print "CalcCRC(" & sMessage & ")=" & Hex(iCRC) & " BB3D"
+
+
+End Sub
+
 Private Sub bEnd_Click()
     UnloadAllForms Me.Name
     Unload Me
@@ -215,18 +317,91 @@ Private Sub bFindModem_Click()
 End Sub
 
 Private Sub bGetCurrentData_Click()
-    Dim stringa As String
+    Dim Stringa As String
     MSComm1.Output = "T" + vbCrLf
-    stringa = InputComTimeOut(10)
-    If stringa <> "TimeOut" Then
+    Stringa = InputComTimeOut(10)
+    If Stringa <> "TimeOut" Then
         Text1.Text = "Actual date in GMM" & vbCrLf
-        Text1.Text = Text1.Text & stringa
+        Text1.Text = Text1.Text & Stringa
         
     Else
         MsgBox "Error in getting Time from GMM! No answer!", vbCritical
         
     End If
     
+End Sub
+
+Private Sub bGetTodayFiles_Click()
+    Dim Stringa As String
+    Dim Yesterday As String
+    MSComm1.InBufferCount = 0
+    Text1.Text = Text1.Text + "Sending DT" + vbCrLf
+    MSComm1.Output = "DT" + vbCr
+    Stringa = InputComTimeOut(5)
+    Stringa = InputComTimeOut(5)
+    If Stringa = "TimeOut" Then
+
+    End If
+    Text1.Text = Text1.Text + "01 " + Stringa + vbCrLf
+    
+    Yesterday = Format(Now - 1, "yymmdd")
+    MSComm1.Output = Yesterday + vbCr
+    Text1.Text = Text1.Text + Yesterday + vbCrLf
+    Stringa = InputComTimeOut(5)
+    Text1.Text = Text1.Text + "02 " + Stringa + vbCrLf
+    Stringa = InputComTimeOut(5)
+    Text1.Text = Text1.Text + "03 " + Stringa + vbCrLf
+    MSComm1.InBufferCount = 0
+    
+    Me.MousePointer = vbHourglass
+    YmodemRx.Show
+    YmodemRx.YModemDownload
+
+    Text1.Text = Text1.Text + "File received!" + vbCrLf
+
+
+
+    Stringa = InputComTimeOut(5) 'Get blank line
+    Stringa = InputComTimeOut(5) 'Get Transmission Successful. message
+    Text1.Text = Stringa + vbCrLf
+    Stringa = InputComTimeOut(5) 'Get blank line
+    Stringa = InputComTimeOut(5) 'Get GMM> line
+    Text1.Text = Text1.Text + "01 " + Stringa + vbCrLf
+    
+
+    MSComm1.InBufferCount = 0
+
+    Text1.Text = Text1.Text + "Sending DM" + vbCrLf
+    MSComm1.Output = "DM" + vbCr
+    Stringa = InputComTimeOut(5)
+    Stringa = InputComTimeOut(5)
+    If Stringa = "TimeOut" Then
+
+    End If
+    Text1.Text = Text1.Text + "01 " + Stringa + vbCrLf
+    
+    Yesterday = Format(Now - 1, "yymmdd")
+    MSComm1.Output = Yesterday + vbCr
+    Text1.Text = Text1.Text + Yesterday + vbCrLf
+    Stringa = InputComTimeOut(5)
+    Text1.Text = Text1.Text + "02 " + Stringa + vbCrLf
+    Stringa = InputComTimeOut(5)
+    Text1.Text = Text1.Text + "03 " + Stringa + vbCrLf
+    MSComm1.InBufferCount = 0
+
+    Me.MousePointer = vbHourglass
+    YmodemRx.Show
+    YmodemRx.YModemDownload
+
+    Stringa = InputComTimeOut(5) 'Get blank line
+    Stringa = InputComTimeOut(5) 'Get Transmission Successful. message
+    Text1.Text = Stringa + vbCrLf
+    Stringa = InputComTimeOut(5) 'Get blank line
+    Stringa = InputComTimeOut(5) 'Get GMM> line
+    Text1.Text = Text1.Text + "01 " + Stringa + vbCrLf
+    
+    Me.MousePointer = vbNormal
+
 End Sub
 
 Private Sub bModem_Click()
@@ -239,51 +414,70 @@ Private Sub bModem_Click()
 
 End Sub
 Private Sub bConnect_Click()
-    Dim stringa As String
+    Dim Stringa As String
+    Dim Retry As Byte
+    Retry = 1
     'Wake up
     MSComm1.Output = "W"
-    stringa = InputComTimeOut(15)
-    If stringa = "TimeOut" Then
+    Text1.Text = Text1.Text + "Connectin GMM " + Stringa + vbCrLf
+    Stringa = InputComTimeOut(5) 'First line is a blank
+    Stringa = InputComTimeOut(5) 'Here is the answer
+    If Stringa = "TimeOut" Then
         'GMM in not answering retry?
-        
+        Retry = Retry + 1
+        If Retry >= 6 Then
+            Text1.Text = Text1.Text + "No answer from GMM aborting" + vbCrLf
+        Else
+            Text1.Text = Text1.Text + "No answer retrying " + Str(Retry) + vbCrLf
+        End If
     End If
-    If Left(stringa, 3) <> "GMM" Then
+    If Left(Stringa, 3) <> "GMM" Then
         'incorrect answer!!!
+        Text1.Text = Text1.Text + "Incorrect answer from GMM " + Stringa + vbCrLf
+        Exit Sub
+    Else
+        Text1.Text = Text1.Text + "GMM connected " + Stringa + vbCrLf
+        lStatus.Caption = "Connected"
+        bGetTodayFiles.Enabled = True
     End If
+    MSComm1.InBufferCount = 0
 End Sub
 
 Private Sub bRymodem_Click()
-    Dim stringa As String
-    'stringa = sGetAppPath
+    Dim Stringa As String
+    Stringa = sGetAppPath
     MSComm1.CommPort = 6
     MSComm1.Settings = "9600,n,8,1"
-    'MSComm1.Handshaking = comNone
+    MSComm1.Handshaking = comNone
     MSComm1.Handshaking = comRTS
     MSComm1.PortOpen = True
     Port = 6
-    stringa = YmodemReceiveFile(sGetAppPath)
+    Me.MousePointer = vbHourglass
+    YmodemRx.Show
+    YmodemRx.YModemDownload
+    'Stringa = YmodemReceiveFile(sGetAppPath)
     MSComm1.PortOpen = False
 End Sub
 
 Private Sub bSetDate_Click()
-    Dim stringa As String
+    Dim Stringa As String
     'Prende una data o la data di sistema
     Debug.Print "Start of set Date & Time"
     MSComm1.Output = "X" + vbCrLf
     Debug.Print "X"
-    stringa = InputComTimeOut(10)
-    Debug.Print stringa
-    If stringa <> "Input PicoDOS command to eXecute :" Then
+    Stringa = InputComTimeOut(10)
+    Debug.Print Stringa
+    If Stringa <> "Input PicoDOS command to eXecute :" Then
         'ERROR!
     End If
     MSComm1.Output = "DATE gg/mm/aa hh:mm:ss" + vbCrLf
     Debug.Print "DATE gg/mm/aa hh:mm:ss"
-    stringa = InputComTimeOut(10)
-    If Left$(stringa, 12) <> "Clock reads:" Then
-        Debug.Print Left$(stringa, 12)
+    Stringa = InputComTimeOut(10)
+    If Left$(Stringa, 12) <> "Clock reads:" Then
+        Debug.Print Left$(Stringa, 12)
         'ERROR!
     Else
-        Text1.Text = stringa
+        Text1.Text = Stringa
     End If
 End Sub
 
@@ -310,12 +504,12 @@ Private Sub bTranslate_Click()
     Dim iDumm As Long
     Dim Intero As Integer
     Dim Lungo As Long
-    Dim stringa As String
+    Dim Stringa As String
     Dim lStringa As Long
     Dim Float As Single
     Dim iBlocco As Long
-    Dim I As Long
-    Dim J As Long
+    Dim i As Long
+    Dim j As Long
     Dim Filnb As Long
     
     Dim DatePrefix As String        'Year Month day
@@ -375,11 +569,11 @@ Private Sub bTranslate_Click()
     'Filtri di dialogo
     CmDialog1.Filter = "File PMM (*.pmm)|*.pmm|Tutti i file (*.*)|*.*"
     CmDialog1.ShowOpen
-    FileIn = CmDialog1.Filename
+    FileIn = CmDialog1.filename
     
-    stringa = GetNameFromDir(FileIn)
-    FileIn = CmDialog1.Filename 'Non ho capito perchè ma dopo GetNameFromDir FileIn perde il percorso!!!
-    DatePrefix = "20" & Left$(stringa, Len(stringa) - 4)
+    Stringa = GetNameFromDir(FileIn)
+    FileIn = CmDialog1.filename 'Non ho capito perchè ma dopo GetNameFromDir FileIn perde il percorso!!!
+    DatePrefix = "20" & Left$(Stringa, Len(Stringa) - 4)
     
     'impostazioni iniziali di CmDialog1 per la scelta del file da scrivere
     NewPath sGetAppPath
@@ -391,11 +585,10 @@ Private Sub bTranslate_Click()
     'non mostra la casella sola lettura
     CmDialog1.Flags = cdlOFNOverwritePrompt + cdlOFNPathMustExist + cdlOFNNoReadOnlyReturn + cdlOFNHideReadOnly
     'Filtri di dialogo
-    'CmDialog1.Filter = "Dati ASCII(*.dat)|*.dat|Dati Sima (*.bin)|*.bin|Tutti i file (*.*)|*.*"
-    CmDialog1.Filter = "File Ascii (*.dat)|*.dat|Tutti i file (*.*)|*.*"
-    CmDialog1.Filename = Left$(FileIn, Len(FileIn) - 3) + "dat"
+    CmDialog1.Filter = "File Ascii (*.csv)|*.csv|Tutti i file (*.*)|*.*"
+    CmDialog1.filename = Left$(FileIn, Len(FileIn) - 3) + "csv"
     CmDialog1.ShowSave
-    FileOut = CmDialog1.Filename
+    FileOut = CmDialog1.filename
     
     
     On Error GoTo 0
@@ -460,16 +653,16 @@ Private Sub bTranslate_Click()
     For Hours = 0 To 23  'For every hour record
         On Error GoTo Printall
         'Stringa = bMID(BloccoDati, 1, 51)
-        For I = 1 To 51                     'Transer data to the Methane block
-            MethaneBlock(I) = BloccoDati(I + 214 * Hours)
+        For i = 1 To 51                     'Transer data to the Methane block
+            MethaneBlock(i) = BloccoDati(i + 214 * Hours)
             DoEvents
         Next
-        For I = 52 To 102                   'Transer data to the H2S block
-            H2Sblock(I - 51) = BloccoDati(I + 214 * Hours)
+        For i = 52 To 102                   'Transer data to the H2S block
+            H2Sblock(i - 51) = BloccoDati(i + 214 * Hours)
             DoEvents
         Next
-        For I = 103 To 213                   'Transer data to the CTD block
-            CTDblock(I - 102) = BloccoDati(I + 214 * Hours)
+        For i = 103 To 213                   'Transer data to the CTD block
+            CTDblock(i - 102) = BloccoDati(i + 214 * Hours)
             DoEvents
         Next
     
@@ -488,28 +681,28 @@ Private Sub bTranslate_Click()
         'Debug.Print "SmsMet="; SmsMet 'This is the size of one measurement
         NbmMet = MethaneBlock(3)       'Number of dated measurements
         'Debug.Print "NbmMet="; NbmMet
-        For I = 0 To 5
-            TuttiDati(TuttiDatiIndex + I).Datagiorno = DatePrefix
-            DateMinsMet = CLng(MethaneBlock(4 + I * 8)) * 256 + MethaneBlock(5 + I * 8)
+        For i = 0 To 5
+            TuttiDati(TuttiDatiIndex + i).Datagiorno = DatePrefix
+            DateMinsMet = CLng(MethaneBlock(4 + i * 8)) * 256 + MethaneBlock(5 + i * 8)
             WeekDayn = Int(DateMinsMet / 1440) + 1 'Number of minutes since last Monday 00:00
             Intero = DateMinsMet - 1440 * (WeekDayn - 1) 'Number of minutes since midnight
             Lungo = Val(DatePrefix)
-            TuttiDati(TuttiDatiIndex + I).DataMeas = CDate(DateSerial(Left(DatePrefix, 4), Mid(DatePrefix, 5, 2), Right(DatePrefix, 2)) + Intero / 1440)
-            TuttiDati(TuttiDatiIndex + I).Oraminuti = DateMinsMet
+            TuttiDati(TuttiDatiIndex + i).DataMeas = CDate(DateSerial(Left(DatePrefix, 4), Mid(DatePrefix, 5, 2), Right(DatePrefix, 2)) + Intero / 1440)
+            TuttiDati(TuttiDatiIndex + i).Oraminuti = DateMinsMet
             'Debug.Print "WeekDayn="; WeekDayn; " "
             'Debug.Print "DateMinsMet="; DateMinsMet; " ";
-            ChansTrans = MethaneBlock(6 + I * 8)
+            ChansTrans = MethaneBlock(6 + i * 8)
             'Debug.Print "ChansTrans="; ChansTrans; " ";
-            Dummy = MethaneBlock(7 + I)
+            Dummy = MethaneBlock(7 + i)
             'Debug.Print "dummy="; Dummy
-            MeanCH4 = CLng(MethaneBlock(8 + I * 8)) * 256 + MethaneBlock(9 + I * 8)
-            SigmaCH4 = CLng(MethaneBlock(10 + I * 8)) * 256 + MethaneBlock(11 + I * 8)
+            MeanCH4 = CLng(MethaneBlock(8 + i * 8)) * 256 + MethaneBlock(9 + i * 8)
+            SigmaCH4 = CLng(MethaneBlock(10 + i * 8)) * 256 + MethaneBlock(11 + i * 8)
             'Debug.Print "MeanCH4="; MeanCH4; " SigmaCH4="; SigmaCH4
-            TuttiDati(TuttiDatiIndex + I).MeanCH4 = MeanCH4
-            TuttiDati(TuttiDatiIndex + I).SigmaCH4 = SigmaCH4
+            TuttiDati(TuttiDatiIndex + i).MeanCH4 = MeanCH4
+            TuttiDati(TuttiDatiIndex + i).SigmaCH4 = SigmaCH4
             'Print #Filnb, DatePrefix; " "; DateMinsMet; " "; MeanCH4; " "; SigmaCH4
             
-        Next I
+        Next i
         
         
         'Debug.Print "Start of H2S Block"
@@ -525,23 +718,23 @@ Private Sub bTranslate_Click()
         'Debug.Print "SmsH2S="; SmsH2S 'This is the size of one measurement
         NbmH2S = H2Sblock(3)       'Number of dated measurements
         'Debug.Print "NbmH2S="; NbmH2S
-        For I = 0 To 5
-            DateMinsH2S = CLng(H2Sblock(4 + I * 8)) * 256 + H2Sblock(5 + I * 8)
+        For i = 0 To 5
+            DateMinsH2S = CLng(H2Sblock(4 + i * 8)) * 256 + H2Sblock(5 + i * 8)
             WeekDayn = DateMinsH2S / 1440 + 1 'Number of minutes since last Monday 00:00
             'Debug.Print "WeekDayn="; WeekDayn; " "
             'Debug.Print "DateMinsH2S="; DateMinsH2S; " ";
-            ChansTrans = H2Sblock(6 + I * 8)
+            ChansTrans = H2Sblock(6 + i * 8)
             'Debug.Print "ChansTrans="; ChansTrans; " ";
-            Dummy = H2Sblock(7 + I * 8)
+            Dummy = H2Sblock(7 + i * 8)
             'Debug.Print "dummy="; Dummy
-            MeanH2S = CLng(H2Sblock(8 + I * 8)) * 256 + H2Sblock(9 + I * 8)
-            SigmaH2S = CLng(H2Sblock(10 + I * 8)) * 256 + H2Sblock(11 + I * 8)
+            MeanH2S = CLng(H2Sblock(8 + i * 8)) * 256 + H2Sblock(9 + i * 8)
+            SigmaH2S = CLng(H2Sblock(10 + i * 8)) * 256 + H2Sblock(11 + i * 8)
             'Debug.Print "MeanH2S="; MeanH2S; " SigmaH2S="; SigmaH2S
-            TuttiDati(TuttiDatiIndex + I).MeanH2S = MeanH2S
-            TuttiDati(TuttiDatiIndex + I).SigmaH2S = SigmaH2S
+            TuttiDati(TuttiDatiIndex + i).MeanH2S = MeanH2S
+            TuttiDati(TuttiDatiIndex + i).SigmaH2S = SigmaH2S
             'Print #Filnb, DatePrefix; " "; DateMinsMet; " "; MeanH2S; " "; SigmaH2S
 
-        Next I
+        Next i
         
         'Debug.Print "Start of CTD Block"
         Print #Filnb, "Start of CTD Block"
@@ -556,20 +749,20 @@ Private Sub bTranslate_Click()
         'Debug.Print "SmsCTD="; SmsCTD 'This is the size of one measurement
         NbmCTD = CTDblock(3)       'Number of dated measurements
         'Debug.Print "NbmCTD="; NbmCTD
-        For I = 0 To 5
-            DateMinsCTD = CLng(CTDblock(4 + I * 18)) * 256 + CTDblock(5 + I * 18)
+        For i = 0 To 5
+            DateMinsCTD = CLng(CTDblock(4 + i * 18)) * 256 + CTDblock(5 + i * 18)
             WeekDayn = DateMinsCTD / 1440 + 1 'Number of minutes since last Monday 00:00
             Intero = DateMinsCTD - 1440 * (WeekDayn - 1) 'Number of minutes since midnight
             'Debug.Print "WeekDayn="; WeekDayn; " "
             'Debug.Print "DateMinsCTD="; DateMinsCTD; " ";
-            ChansTrans = CTDblock(6 + I * 18)
+            ChansTrans = CTDblock(6 + i * 18)
             'Debug.Print "ChansTrans="; ChansTrans; " ";
-            Dummy = CTDblock(7 + I * 18)
+            Dummy = CTDblock(7 + i * 18)
             'Debug.Print "dummy="; Dummy
     
-            HeaderCTD = CTDblock(8 + I * 18)  'Must be C
+            HeaderCTD = CTDblock(8 + i * 18)  'Must be C
             'Debug.Print "Header="; HeaderCTD
-            FlagsCTD = CTDblock(9 + I * 18) 'E=error 0=empty 1=ok
+            FlagsCTD = CTDblock(9 + i * 18) 'E=error 0=empty 1=ok
             'Debug.Print "Flags="; FlagsCTD
             Print #Filnb, DatePrefix; " "; DateMinsCTD; " ";
             Select Case FlagsCTD
@@ -583,21 +776,21 @@ Private Sub bTranslate_Click()
                     Print #Filnb, "Flags=undefined! "; Format(CDate(DateSerial(Left(DatePrefix, 4), Mid(DatePrefix, 5, 2), Right(DatePrefix, 2)) + Intero / 1440), "yyyy/mm/dd hh:mm")
             End Select
            
-            stringa = bMID(CTDblock, (10 + I * 18), 4)
-            TempCTD = String2long(stringa)
-            stringa = bMID(CTDblock, (14 + I * 18), 4)
-            CondCTD = String2long(stringa)
-            stringa = bMID(CTDblock, (18 + I * 18), 4)
-            PressCTD = String2long(stringa)
+            Stringa = bMID(CTDblock, (10 + i * 18), 4)
+            TempCTD = String2long(Stringa)
+            Stringa = bMID(CTDblock, (14 + i * 18), 4)
+            CondCTD = String2long(Stringa)
+            Stringa = bMID(CTDblock, (18 + i * 18), 4)
+            PressCTD = String2long(Stringa)
             
             'Debug.Print "T="; TempCTD; "C="; CondCTD; "P="; PressCTD
-            TuttiDati(TuttiDatiIndex + I).Temp = TempCTD / 10000
-            TuttiDati(TuttiDatiIndex + I).Cond = CondCTD / 100000
-            TuttiDati(TuttiDatiIndex + I).Press = PressCTD / 1000
+            TuttiDati(TuttiDatiIndex + i).Temp = TempCTD / 10000
+            TuttiDati(TuttiDatiIndex + i).Cond = CondCTD / 100000
+            TuttiDati(TuttiDatiIndex + i).Press = PressCTD / 1000
             'Print #Filnb, DatePrefix; " "; DateMinsCTD; " "; TempCTD; " "; CondCTD; " "; PressCTD
            
             
-        Next I
+        Next i
         TuttiDatiIndex = TuttiDatiIndex + 6
      Next Hours
 
@@ -606,18 +799,18 @@ Printall:
     'Print all data
     Print #Filnb, "All Data"
     Print #Filnb, "Date; MeanCH4; SigmaCH4; MeanH2S; SigmaH2S; Temp; Cond; Press"
-    For I = 1 To 144
-        Print #Filnb, Format(TuttiDati(I).DataMeas, "yyyy/mm/dd hh:mm"); " ;";
+    For i = 1 To 144
+        Print #Filnb, Format(TuttiDati(i).DataMeas, "yyyy/mm/dd hh:mm"); " ;";
         'Print #Filnb, TuttiDati(i).Datagiorno; " ;";
         'Print #Filnb, TuttiDati(i).Oraminuti; " ;";
-        Print #Filnb, TuttiDati(I).MeanCH4; " ;";
-        Print #Filnb, TuttiDati(I).SigmaCH4; " ;";
-        Print #Filnb, TuttiDati(I).MeanH2S; " ;";
-        Print #Filnb, TuttiDati(I).SigmaH2S; " ;";
-        Print #Filnb, TuttiDati(I).Temp; " ;";
-        Print #Filnb, TuttiDati(I).Cond; " ;";
-        Print #Filnb, TuttiDati(I).Press
-    Next I
+        Print #Filnb, TuttiDati(i).MeanCH4; " ;";
+        Print #Filnb, TuttiDati(i).SigmaCH4; " ;";
+        Print #Filnb, TuttiDati(i).MeanH2S; " ;";
+        Print #Filnb, TuttiDati(i).SigmaH2S; " ;";
+        Print #Filnb, TuttiDati(i).Temp; " ;";
+        Print #Filnb, TuttiDati(i).Cond; " ;";
+        Print #Filnb, TuttiDati(i).Press
+    Next i
 Annulla:
     Me.MousePointer = vbDefault
     Close #Filnb
@@ -644,12 +837,12 @@ Private Sub bTranslatePTM_Click()
     Dim iDumm As Long
     Dim Intero As Integer
     Dim Lungo As Long
-    Dim stringa As String
+    Dim Stringa As String
     Dim lStringa As Long
     Dim Float As Single
     Dim iBlocco As Long
-    Dim I As Long
-    Dim J As Long
+    Dim i As Long
+    Dim j As Long
     Dim Filnb As Long
     
     Dim DateDay As Long
@@ -693,12 +886,12 @@ Private Sub bTranslatePTM_Click()
     'Filtri di dialogo
     CmDialog1.Filter = "File PTM (*.ptm)|*.ptm|Tutti i file (*.*)|*.*"
     CmDialog1.ShowOpen
-    FileIn = CmDialog1.Filename
+    FileIn = CmDialog1.filename
 
 
-    stringa = GetNameFromDir(FileIn)
-    FileIn = CmDialog1.Filename
-    DatePrefix = "20" & Left$(stringa, Len(stringa) - 4)
+    Stringa = GetNameFromDir(FileIn)
+    FileIn = CmDialog1.filename
+    DatePrefix = "20" & Left$(Stringa, Len(Stringa) - 4)
     
     'impostazioni iniziali di CmDialog1 per la scelta del file da scrivere
     NewPath sGetAppPath
@@ -710,11 +903,10 @@ Private Sub bTranslatePTM_Click()
     'non mostra la casella sola lettura
     CmDialog1.Flags = cdlOFNOverwritePrompt + cdlOFNPathMustExist + cdlOFNNoReadOnlyReturn + cdlOFNHideReadOnly
     'Filtri di dialogo
-    'CmDialog1.Filter = "Dati ASCII(*.dat)|*.dat|Dati Sima (*.bin)|*.bin|Tutti i file (*.*)|*.*"
-    CmDialog1.Filter = "File Ascii (*.dat)|*.dat|Tutti i file (*.*)|*.*"
-    CmDialog1.Filename = Left$(FileIn, Len(FileIn) - 3) + "tec.dat"
+    CmDialog1.Filter = "File Ascii (*.csv)|*.csv|Tutti i file (*.*)|*.*"
+    CmDialog1.filename = Left$(FileIn, Len(FileIn) - 3) + "tec.csv"
     CmDialog1.ShowSave
-    FileOut = CmDialog1.Filename
+    FileOut = CmDialog1.filename
     
     On Error GoTo 0
     'Start Translation
@@ -929,24 +1121,25 @@ Printall:
     'Print all data
     Print #Filnb, "All Data"
     Print #Filnb, "Date; Reboots; UsedMem; FreeMem; Flags; BattV; BattC; DACSt; BattT; DacsP; BattP"
-    For I = 0 To 23
-        Print #Filnb, Format(TuttiDati(I).DataMeas, "yyyy/mm/dd hh:mm"); " ;";
+    For i = 0 To 23
+        Print #Filnb, Format(TuttiDati(i).DataMeas, "yyyy/mm/dd hh:mm"); " ;";
         'Print #Filnb, TuttiDati(i).Datagiorno; " ;";
         'Print #Filnb, TuttiDati(i).Oraminuti; " ;";
-        Print #Filnb, TuttiDati(I).Reboots; " ;";
-        Print #Filnb, TuttiDati(I).UsedMem; " ;";
-        Print #Filnb, TuttiDati(I).FreeMem; " ;";
-        Print #Filnb, TuttiDati(I).Flags; " ;";
-        Print #Filnb, TuttiDati(I).BattVol; " ;";
-        Print #Filnb, TuttiDati(I).BattCurr; " ;";
-        Print #Filnb, TuttiDati(I).DacsT; " ;";
-        Print #Filnb, TuttiDati(I).BattT; " ;";
-        Print #Filnb, TuttiDati(I).DacsP; " ;";
-        Print #Filnb, TuttiDati(I).BattP
-    Next I
+        Print #Filnb, TuttiDati(i).Reboots; " ;";
+        Print #Filnb, TuttiDati(i).UsedMem; " ;";
+        Print #Filnb, TuttiDati(i).FreeMem; " ;";
+        Print #Filnb, TuttiDati(i).Flags; " ;";
+        Print #Filnb, TuttiDati(i).BattVol; " ;";
+        Print #Filnb, TuttiDati(i).BattCurr; " ;";
+        Print #Filnb, TuttiDati(i).DacsT; " ;";
+        Print #Filnb, TuttiDati(i).BattT; " ;";
+        Print #Filnb, TuttiDati(i).DacsP; " ;";
+        Print #Filnb, TuttiDati(i).BattP
+    Next i
 Annulla:
     Me.MousePointer = vbDefault
     Close #Filnb
     DoEvents
 
 End Sub
+

@@ -120,12 +120,12 @@ Public Sub StampaAscii(stringa As String)
     'Stampa il valore dei caratteri ASCII di una stringa
     'nella finestra di Debug
     Dim lStringa As Double
-    Dim I As Integer
+    Dim i As Integer
     lStringa = Len(stringa)
     If lStringa = 0 Then Exit Sub
     Debug.Print "Risposta"; stringa; " ";
-    For I = 1 To lStringa
-        Debug.Print Asc(Mid(stringa, I, 1));
+    For i = 1 To lStringa
+        Debug.Print Asc(Mid(stringa, i, 1));
     Next
     Debug.Print
 End Sub
@@ -133,12 +133,12 @@ Public Function String2Ascii(stringa As String) As String
 'Converte una stringa nei corrispondenti valori ASCII
 'Non viene gestito il CHR$(0)
     Dim lStringa As Double
-    Dim I As Integer
+    Dim i As Integer
     Dim StringAscii As String
     lStringa = Len(stringa)
     If lStringa = 0 Then Exit Function
-    For I = 1 To lStringa
-        String2Ascii = String2Ascii + Asc(Mid(stringa, I, 1)) + " "
+    For i = 1 To lStringa
+        String2Ascii = String2Ascii + Asc(Mid(stringa, i, 1)) + " "
     Next
 End Function
 Public Function Char2ascii(stringa As String) As String
@@ -147,14 +147,14 @@ Public Function Char2ascii(stringa As String) As String
 'Viene gestito anche il chr$(0)
     Dim lStringa As Integer
     Dim tStringa As String
-    Dim I As Integer
+    Dim i As Integer
     
     lStringa = Len(stringa)
-    For I = 1 To lStringa
-        If Mid(stringa, I, 1) = Chr$(0) Then
+    For i = 1 To lStringa
+        If Mid(stringa, i, 1) = Chr$(0) Then
             tStringa = tStringa + " " + "00"
         Else
-            tStringa = tStringa + Str(Asc(Mid(stringa, I, 1)))
+            tStringa = tStringa + Str(Asc(Mid(stringa, i, 1)))
         End If
     Next
     Char2ascii = tStringa
@@ -197,9 +197,9 @@ Public Function CeSpazio(Percorso As String, Nbytes As Long) As Boolean
 End Function
 Public Function stripCrLf(stringa As String) As String
 'elimina i Cr e Lf finali in una stringa
-    Dim I As Long
+    Dim i As Long
     
-    For I = 1 To 2
+    For i = 1 To 2
         If Right(stringa, 1) = vbCr Or Right(stringa, 1) = vbLf Then
             stringa = Left(stringa, Len(stringa) - 1)
         End If
@@ -293,7 +293,7 @@ Public Function Formato(Numero As Double, StringaFormato As String) As String
 'Il separatore cercando la virgola ma questa potrebbe
 'essere presente come separatore delle migliaia
 
-    Dim I As Integer
+    Dim i As Integer
     Dim LungString2 As Integer
     Dim Stringa2 As String
     Stringa2 = Format(Numero, StringaFormato)
@@ -301,8 +301,8 @@ Public Function Formato(Numero As Double, StringaFormato As String) As String
     'il decimale e' un punto o una virgola?
     If Decimale <> "." Then
         'Si, sostituiamolo con il punto
-        I = InStr(Stringa2, Decimale)
-        Stringa2 = Left(Stringa2, I - 1) + "." + Right(Stringa2, LungString2 - I)
+        i = InStr(Stringa2, Decimale)
+        Stringa2 = Left(Stringa2, i - 1) + "." + Right(Stringa2, LungString2 - i)
     End If
     Formato = Stringa2
 End Function
@@ -430,6 +430,7 @@ Public Function InputComTimeOutBin(TimeOut As Integer, NumByte As Integer) As St
         'fMain.MSComm1.InputMode = comInputModeBinary
 
         TimeStop = Timer + TimeOut
+        'Debug.Print Timer; " "; TimeStop
         fMain.MSComm1.InputLen = NumByte
         Do
             DoEvents
@@ -439,10 +440,11 @@ Public Function InputComTimeOutBin(TimeOut As Integer, NumByte As Integer) As St
 '        Else
 '            linea = "TimeOut"
 '        End If
+        'Debug.Print fMain.MSComm1.InBufferCount
         Linea = fMain.MSComm1.Input
-        If Linea <> "" Then
-            'Debug.Print "inputCom--->"; Char2ascii(Linea)
-        End If
+'        If Linea <> "" Then
+'            Debug.Print "inputCom--->"; Char2ascii(Linea)
+'        End If
         InputComTimeOutBin = Linea
 
 End Function
@@ -457,7 +459,7 @@ Public Function InputComTimeOutBin2(TimeOut As Integer, NumByte As Integer) As S
     Dim Blocco() As Byte
     Dim iBloccoDati As Long
     Dim TimeOuts As Integer
-    Dim I As Long
+    Dim i As Long
     
 
     iBloccoDati = 0
@@ -473,10 +475,10 @@ Public Function InputComTimeOutBin2(TimeOut As Integer, NumByte As Integer) As S
         Else
             'dati = dati + fMain.MSComm1.InBufferCount
             Blocco = fMain.MSComm1.Input
-            For I = LBound(Blocco) To UBound(Blocco)
-                BloccoDati(iBloccoDati) = Blocco(I)
+            For i = LBound(Blocco) To UBound(Blocco)
+                BloccoDati(iBloccoDati) = Blocco(i)
                 iBloccoDati = iBloccoDati + 1
-            Next I
+            Next i
             TimeOuts = 0
         End If
         If TimeOuts > 3 Then Exit Do
@@ -486,9 +488,9 @@ Public Function InputComTimeOutBin2(TimeOut As Integer, NumByte As Integer) As S
         
     Loop Until TimeOuts > 5
     
-    For I = 0 To iBloccoDati - 1
-        InputComTimeOutBin2 = InputComTimeOutBin2 + Chr$(BloccoDati(I))
-    Next I
+    For i = 0 To iBloccoDati - 1
+        InputComTimeOutBin2 = InputComTimeOutBin2 + Chr$(BloccoDati(i))
+    Next i
 
 End Function
 Public Function InputComTimeOutBin3(TimeOut As Integer) As Byte
@@ -524,25 +526,25 @@ Public Function bMID(matrice() As Byte, inizio As Long, lunghezza As Long) As St
 'Estrae una stringa da un vettore di bytes
 'Sintassi come istruzione MID
     Dim stringa As String
-    Dim I As Long
+    Dim i As Long
 
-    For I = inizio To inizio + lunghezza - 1
-        stringa = stringa + Chr(matrice(I))
+    For i = inizio To inizio + lunghezza - 1
+        stringa = stringa + Chr(matrice(i))
         DoEvents
     Next
     bMID = stringa
 End Function
 
 Public Function GetNameFromDir(Dir As String) As String
-    Dim I As Long
+    Dim i As Long
     Dim lasti As Long
     Dim Dirr As String
     Dirr = Dir
     Do
-        lasti = I
-        I = InStr(Dir, "\")
-        Dir = Right(Dir, Len(Dir) - I)
-    Loop Until I = 0
+        lasti = i
+        i = InStr(Dir, "\")
+        Dir = Right(Dir, Len(Dir) - i)
+    Loop Until i = 0
     GetNameFromDir = Dir
 End Function
 

@@ -26,7 +26,7 @@ Public Function MandaComando(comando As String, TmOut As Integer) As String
             GoTo fine
         End If
         fMain.MSComm1.InBufferCount = 0
-        fMain.MSComm1.Output = "AT" + comando + vbCr
+        fMain.MSComm1.Output = "AT" + comando + vbCrLf
         TimeStop = Timer + TmOut
         fMain.MSComm1.InputLen = 1
         Do

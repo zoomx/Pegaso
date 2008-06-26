@@ -18,14 +18,14 @@ Private Sub Main()
         'There is not a COM port defined
         fMain.bModem.Enabled = False
     End If
-
+    ComPort = i
   'unload the splash screen and free its memory
    Unload frmSplash
    Set frmSplash = Nothing
 End Sub
 
 Public Sub Init()
-    Dim nfile As Integer
+    Dim nFile As Integer
     Dim rint As Integer
     Dim Path As String
     Dim i As Long
@@ -53,11 +53,14 @@ Public Sub Init()
 
     CTRLC = Chr(3)
     fdn = 0
+    
+    
+    CRC16Setup
     'Apre il file di log
     If fDebug Then
-        filename = sGetAppPath + "log.txt"
+        FileName = sGetAppPath + "log.txt"
         fdn = FreeFile
-        Open filename For Append As #fdn
+        Open FileName For Append As #fdn
         Print #fdn,
         Print #fdn, "-----------------------------------------------------"
         Print #fdn, Versione

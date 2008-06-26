@@ -196,7 +196,7 @@ End Sub
 Private Sub bAnnulla_Click()
     If ChiamaFlag = True Then
         OpenCom
-        fMain.MSComm1.Output = Chr$(3)
+        'fMain.MSComm1.Output = Chr$(3)
         CloseCom
     End If
     ChiamaFlag = False
@@ -395,7 +395,7 @@ Private Sub bChiama_Click()
         Exit Sub
     End If
 
-    fMain.MSComm1.Output = "AT V1" + vbCr
+    fMain.MSComm1.Output = "ATV1" + vbCr
     'Sleep (100)
     risposta = UCase(InputComTimeOut(2))
     If fDebug Then Print #fdn, "1v1 "; risposta;
@@ -410,7 +410,7 @@ Private Sub bChiama_Click()
         Exit Sub
     End If
 
-    fMain.MSComm1.Output = "AT Q0" + vbCr
+    fMain.MSComm1.Output = "ATQ0" + vbCr
     'Sleep (200)
     'azzera il buffer di input
     'fMain.MSComm1.InBufferCount = 0
@@ -428,23 +428,8 @@ Private Sub bChiama_Click()
         Exit Sub
     End If
 
-    'fMain.MSComm1.Output = "AT S7=60" + vbCr
-    'Sleep (1500)
-
-    'Label1.Caption = Label1.Caption + vbCrLf
-    'Sleep (100)
-    'fMain.MSComm1.Output = "ats07=5" + vbCrLf
-
-    'Label1.Caption = Label1.Caption + "Attesa risposta modem" + vbCrLf
-    'Risposta = MandaComando("s07=0", 5)
-    'Risposta = MandaComando("s07=60", 5)
     DoEvents
 
-    'Aspetta l'ok con timeout
-    'Risposta = UCase(InputComTimeOut(2))
-    'Debug.Print "1s7 "; Risposta;
-    'Risposta = UCase(InputComTimeOut(2))
-    'Debug.Print "2 "; Risposta;
     
     If ChiamaFlag = False Then
         Debug.Print "ANNULLATO!"
@@ -452,16 +437,6 @@ Private Sub bChiama_Click()
         Exit Sub
     End If
 
-    'fMain.MSComm1.Output = "AT S7?" + vbCr
-
-    'Risposta = UCase(InputComTimeOut(2))
-    'Debug.Print "S7? "; Risposta;
-    'Risposta = UCase(InputComTimeOut(2))
-    'Debug.Print "2 "; Risposta;
-    'Risposta = UCase(InputComTimeOut(2))
-    'Debug.Print "2 "; Risposta;
-    'Risposta = UCase(InputComTimeOut(2))
-    'Debug.Print "2 "; Risposta;
 
     If ChiamaFlag = False Then
         Debug.Print "ANNULLATO!"
@@ -496,7 +471,7 @@ Private Sub bChiama_Click()
     fMain.Text1.Text = fMain.Text1.Text + "Waiting for remote modem" + vbCrLf
     
     Tempo0 = Timer
-retry:
+Retry:
     risposta = UCase(InputComTimeOut(10))
     Debug.Print "3 "; risposta;
     If fDebug Then Print #fdn, "3 "; risposta
@@ -507,7 +482,7 @@ retry:
         Exit Sub
     End If
     
-    If Left(risposta, 1) < " " Then GoTo retry
+    If Left(risposta, 1) < " " Then GoTo Retry
     If risposta = "TIMEOUT" Then
         'controllo timeout
         If Timer < Contatore Then       '??????Contatore non è inizializzato!!!
@@ -516,7 +491,7 @@ retry:
             DiffTempo = Timer - Tempo0
         End If
         Debug.Print DiffTempo
-        GoTo retry
+        GoTo Retry
     End If
     
     'Risposta = Left(Risposta, Len(Risposta) - 2)
@@ -536,9 +511,11 @@ retry:
         Case "CONN"
             'MsgBox "Conn" + Risposta
             Label1.Caption = Label1.Caption + "Remote Modem Connected" + vbCrLf
-            Connetti
+            'Connetti
+            fMain.bConnect.Enabled = True
             Me.Hide
             Unload Me
+            fMain.Show
             Exit Sub
 
         Case "BUSY"
@@ -560,7 +537,7 @@ retry:
             MsgBox "Modem in Delayed mode! " + Messaggio
             GoTo Fallimento
         Case "ATDT"
-            GoTo retry
+            GoTo Retry
         Case Else
             MsgBox "Wrong answer from local modem! " + Messaggio
             GoTo Fallimento
@@ -600,7 +577,7 @@ End Sub
 Private Sub Connetti()
     Dim Intero As Integer
     Dim risposta As String
-    Dim stringa As String
+    Dim Stringa As String
     Dim i As Long
     Dim iMH4 As Integer
     Dim iVersione As Integer

@@ -57,7 +57,7 @@ Public Function RShift2(ByVal Value As Integer, _
     If (Value And &H8) Then hi = &H4
 
     RShift2 = (Value And &H7FFFFFFE) \ (2 ^ Shift)
-    RShift2 = (RShiftLong Or (hi \ (2 ^ (Shift - 1))))
+    RShift2 = (RShift2 Or (hi \ (2 ^ (Shift - 1))))
 End Function
 
 
@@ -79,12 +79,12 @@ End Sub
  ' Thank you Lewis Moten.  Why doen't VB support this?
  Private Function LShift3(ByVal pnValue As Double, ByVal pnShift As Double) As Double
      ' Equivilant to C's Bitwise << operator
-     LShift = pnValue * (2 ^ pnShift)
+'     LShift = pnValue * (2 ^ pnShift)
  End Function
 
  Private Function RShift3(ByVal pnValue As Double, ByVal pnShift As Double) As Double
      ' Equivilant to C's Bitwise >> operator
-     RShift = pnValue \ (2 ^ pnShift)
+ '    RShift = pnValue \ (2 ^ pnShift)
  End Function
 
 'Public Function LShift(w As Long, c As Integer) As Integer

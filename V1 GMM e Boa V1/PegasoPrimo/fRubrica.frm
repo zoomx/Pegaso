@@ -2,7 +2,7 @@ VERSION 5.00
 Object = "{00028C01-0000-0000-0000-000000000046}#1.0#0"; "DBGRID32.OCX"
 Begin VB.Form fRubrica 
    BorderStyle     =   1  'Fixed Single
-   Caption         =   "Poseidon - Rubrica"
+   Caption         =   "Pegaso - Rubrica"
    ClientHeight    =   3900
    ClientLeft      =   4470
    ClientTop       =   4515
@@ -48,10 +48,10 @@ Begin VB.Form fRubrica
       Width           =   1095
    End
    Begin MSDBGrid.DBGrid DBGrid1 
-      Bindings        =   "fRubrica.frx":0442
+      Bindings        =   "fRubrica.frx":0CCA
       Height          =   3600
       Left            =   120
-      OleObjectBlob   =   "fRubrica.frx":0456
+      OleObjectBlob   =   "fRubrica.frx":0CDE
       TabIndex        =   1
       Top             =   120
       Width           =   4695
@@ -89,7 +89,7 @@ Public Sub LeggiRubrica()
     'Carica la rubrica
     Dim Path As String
     Dim NomeFile As String
-    Dim nfile As Integer
+    Dim nFile As Integer
     Dim ws1 As Workspace
     Dim db1 As Database
     Dim td1 As TableDef
@@ -97,13 +97,13 @@ Public Sub LeggiRubrica()
     Dim rs1 As Recordset
     
     Path = sGetAppPath()
-    nfile = FreeFile
+    nFile = FreeFile
 
     'Cerca la rubrica
     NomeFile = Path + "Rubrica.mdb"
     Err.Clear
     On Local Error Resume Next
-    Open NomeFile For Input As #nfile
+    Open NomeFile For Input As #nFile
     If Err.Number = 53 Then
         'La rubrica non c'è, ne crea una vuota
         NomeFile = "ERRORE!" + vbCrLf
@@ -149,10 +149,10 @@ Public Sub LeggiRubrica()
     
     Else
         ErrHandler
-        Close nfile
+        Close nFile
         Exit Sub
     End If
-    Close nfile
+    Close nFile
     'NomeFile = Path + "Rubrica.txt"
     'NomeFile = Path + "Rubrica.csv"
     'NomeFile = Path + "Rubrica.xls"

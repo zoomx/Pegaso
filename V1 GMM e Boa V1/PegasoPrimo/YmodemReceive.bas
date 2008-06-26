@@ -279,7 +279,7 @@ Public Function RxPacket(ByVal Port As Integer, _
       Buffer(i) = Code
       'compute CRC or checksum
       If NCGbyte <> NAK Then
-        CheckSum = UpdateCRC(Code, CheckSum)
+        'CheckSum = UpdateCRC(Code, CheckSum)
       Else
         CheckSum = (CheckSum + Code) And 255
       End If

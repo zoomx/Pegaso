@@ -104,7 +104,7 @@ Begin VB.Form fCom
    Begin VB.Image Image2 
       Height          =   720
       Left            =   120
-      Picture         =   "fCom.frx":0442
+      Picture         =   "fCom.frx":0CCA
       Top             =   120
       Width           =   720
    End

@@ -5,9 +5,11 @@ Begin VB.Form fFindModem
    ClientLeft      =   3690
    ClientTop       =   3195
    ClientWidth     =   3450
+   Icon            =   "fFindModem.frx":0000
    LinkTopic       =   "Form1"
    ScaleHeight     =   3195
    ScaleWidth      =   3450
+   StartUpPosition =   2  'CenterScreen
    Begin VB.CommandButton bQuit 
       Caption         =   "&Quit"
       Height          =   495
@@ -98,39 +100,40 @@ Private Sub bQuit_Click()
 End Sub
 
 Private Sub bStart_Click()
-Dim I As Integer
+Dim i As Integer
 Dim J As Integer
 Dim coms(10) As Integer
 Dim risposta As String
 
 lMessage.Caption = "WAIT!"
-
+CloseCom
+fMain.MSComm1.Handshaking = comRTS
+fMain.MSComm1.Settings = "19200,n,8,1"
 'Find all coms from 1 to 10
 On Error GoTo errore
 J = 1
-For I = 1 To 20
+For i = 1 To 20
     ComOk = True
-    fMain.MSComm1.CommPort = I
+    fMain.MSComm1.CommPort = i
     fMain.MSComm1.PortOpen = True
         If ComOk = True Then
-            tCOM = tCOM + "COM" + Str(I) + vbCrLf
-            coms(J) = I
+            tCOM = tCOM + "COM" + Str(i) + vbCrLf
+            coms(J) = i
             J = J + 1
             fMain.MSComm1.PortOpen = False
         End If
-Next I
+Next i
 
 If J > 1 Then
-    For I = 1 To J - 1
-        fMain.MSComm1.CommPort = coms(I)
-        fMain.MSComm1.Settings = "9600,8,n,1"
+    For i = 1 To J - 1
+        fMain.MSComm1.CommPort = coms(i)
         fMain.MSComm1.PortOpen = True
         risposta = MandaComando("I", 1)
-        Debug.Print risposta
+        'Debug.Print risposta
         If risposta <> "" Then
             tModem = tModem + risposta + vbCrLf
             'aggiungere il modem alla lista
-            cChooseModem.AddItem ("COM" & Str(coms(I)))
+            cChooseModem.AddItem ("COM" & Str(coms(i)))
             'oppure
             'cChooseModem.AddItem (risposta)
         Else
@@ -138,7 +141,7 @@ If J > 1 Then
         End If
         fMain.MSComm1.PortOpen = False
         'cChooseModem.AddItem ("COM" & Str(i))
-    Next I
+    Next i
 End If
 cChooseModem.Enabled = True
 lMessage.Caption = "Choose"
@@ -150,20 +153,29 @@ errore:
 End Sub
 
 Private Sub cChooseModem_Click()
-    Dim stringa As String
+    Dim Stringa As String
     Dim Index As Integer
-    stringa = cChooseModem.Text
+    Stringa = cChooseModem.Text
     'Debug.Print stringa
-    stringa = Mid(stringa, 4)
+    Stringa = Mid(Stringa, 4)
     'Debug.Print stringa
-    Index = Val(stringa)
+    Index = Val(Stringa)
     'Debug.Print Index
     ComPort = Index
-    'Debug.Print ComPort
+    Debug.Print "ComPort="; ComPort
     fMain.bModem.Enabled = True
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
     Unload Me
     fMain.Show
+End Sub
+
+Private Sub tCOM_DblClick()
+        Dim Stringa As String
+    Stringa = tCOM.SelText
+    Debug.Print "COM scelta "; Stringa
+    ComPort = Val(Stringa)
+    Debug.Print "ComPort="; ComPort
+    fMain.bModem.Enabled = True
 End Sub

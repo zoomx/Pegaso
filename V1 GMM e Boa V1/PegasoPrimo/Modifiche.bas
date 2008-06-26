@@ -20,3 +20,11 @@ Option Explicit
 'Reimplementazione dell'YMODEM ancora non completa
 'Il sorgente si compila senza errori
 
+'2008 05 27
+'Reimplementazione dell'YMODEM da zero. Sembra funzioni
+'Inizio implementazione chiamata modem e connessione a GMM
+
+'2008 05 28
+'Cambiata l'estensione predefinita dei file tradotti da .dat a .csv
+'Fatte alcune modifiche all'interrogazione del GMM
+
