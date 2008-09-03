@@ -12,6 +12,20 @@ Begin VB.Form fMain
    ScaleHeight     =   6495
    ScaleWidth      =   10620
    StartUpPosition =   3  'Windows Default
+   Begin VB.Timer Timer1 
+      Enabled         =   0   'False
+      Interval        =   1000
+      Left            =   5040
+      Top             =   1560
+   End
+   Begin VB.CommandButton bDemoData 
+      Caption         =   "Da&ta"
+      Height          =   615
+      Left            =   3960
+      TabIndex        =   27
+      Top             =   4680
+      Width           =   975
+   End
    Begin VB.CommandButton bFindModem 
       Caption         =   "&Find modem"
       Height          =   495
@@ -372,6 +386,25 @@ Private Sub bConnectModem_Click()
 
 End Sub
 
+Private Sub bDemoData_Click()
+    Static Switch As Boolean
+'    Dim FileName As String
+'    Dim FileNumber As Integer
+
+    If Switch = False Then
+        FileNumber = FreeFile
+        FileName = App.Path + "\data.csv"
+        Open FileName For Input As #FileNumber
+        Timer1.Enabled = True
+        Switch = True
+    Else
+        Timer1.Enabled = False
+        Close FileNumber
+        Switch = False
+    End If
+        
+End Sub
+
 Private Sub bDownload_Click()
     Dim GetAlive As String
     Dim OpenFile As String
@@ -498,15 +531,15 @@ Private Sub Form_Load()
         .NewLCD pTemperature
         .BackColor = vbBlack
         .ForeColor = vbRed
-        .Caption = "20.5"
+        .Caption = "16.1"
     End With
-    With LCDtemp
+    With LCDcond
         .NewLCD pCond
         .BackColor = vbBlack
         .ForeColor = vbRed
-        .Caption = "55"
+        .Caption = "4.71"
     End With
-    With LCDtemp
+    With LCDpH
         .NewLCD ppH
         .BackColor = vbBlack
         .ForeColor = vbRed
@@ -590,3 +623,17 @@ Sub DrawLine(ByVal length As Single, ByVal Angle As Single)
 
 End Sub
 
+Private Sub Timer1_Timer()
+    Static stringa As String
+    If Not EOF(FileNumber) Then
+        Line Input #FileNumber, stringa
+        Dati = Split(stringa, ";")
+        If UBound(Dati) = 2 Then
+            LCDtemp.Caption = Dati(0)
+            LCDcond.Caption = Dati(1)
+            LCDdepth.Caption = Dati(2)
+        End If
+    
+    End If
+    
+End Sub

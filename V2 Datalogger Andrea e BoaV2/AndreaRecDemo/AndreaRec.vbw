@@ -1,3 +1,9 @@
-fMain = 186, 208, 1024, 752, , 22, 22, 792, 546, C
+fMain = 182, 206, 1020, 750, , 156, 78, 926, 602, C
 mcLCD = 0, 0, 0, 0, C
-FileFunctions = 88, 80, 926, 624, 
+FileFunctions = 88, 80, 926, 624, C
+fModem = 88, 88, 1020, 634, C, 176, 176, 1014, 720, C
+fRubrica = 44, 44, 976, 588, C, 242, 242, 1080, 786, C
+VariabiliGlobali = 132, 132, 970, 676, C
+ApiFunctions = 0, 0, 0, 0, C
+CommonFunctions = 242, 242, 1080, 786, C
+fFindModem = 88, 226, 1020, 770, C, 0, 0, 838, 544, C
