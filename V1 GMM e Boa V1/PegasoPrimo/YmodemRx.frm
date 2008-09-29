@@ -163,11 +163,11 @@ Riprova2:
     Packet = ReceivePacket128
     
     nFile = FreeFile
-    Open "FirstPacket3.dat" For Output As #nFile
-    Stringa = Char2ascii(Packet)
-    'Debug.Print Stringa
-    Print #nFile, Stringa;
-    Close nFile
+'    Open "FirstPacket3.dat" For Output As #nFile
+'    Stringa = Char2ascii(Packet)
+'    'Debug.Print Stringa
+'    Print #nFile, Stringa;
+'    Close nFile
 
     
     lPacket = Len(Packet)
@@ -177,6 +177,7 @@ Riprova2:
             Retry = Retry + 1
             lRetry.Caption = Str(Retry)
             Debug.Print "Retry "; lRetry
+            lRetry.Caption = Str(Retry)
             If Retry >= 5 Then
                 AbortForTimeout
                 Esci
@@ -185,7 +186,21 @@ Riprova2:
                 GoTo Riprova1
             End If
          Case 1 To 132
-            'Packet too short
+         Debug.Print "Packet too short-->"; lPacket
+            Text1.Text = Text1.Text + "Packet too short-->" & lPacket & vbCrLf
+            
+            Retry = Retry + 1
+            lRetry.Caption = Str(Retry)
+            Debug.Print "Retry "; lRetry
+            If Retry >= 5 Then
+                AbortForTimeout
+                Esci
+                Exit Sub
+            Else
+                fMain.MSComm1.Output = Chr(NAK)
+                GoTo Riprova2
+            End If
+
          Case 133
             'all OK
     End Select
@@ -197,8 +212,13 @@ Riprova2:
     'Check First Byte
     If FirstByte = SOH Then
         Debug.Print "First byte OK!"
+        Text1.Text = Text1.Text + "First byte OK!" + vbCrLf
     Else
         Debug.Print "First byte is " + FirstByte
+        Text1.Text = Text1.Text + "Error on first byte!" + vbCrLf
+        fMain.MSComm1.Output = Chr(NAK)
+        Retry = 0
+        GoTo Riprova2
     End If
     
     PacketNumber = GetByte(Packet, 2)
@@ -207,13 +227,22 @@ Riprova2:
     If PacketNumber = 0 Then
         Debug.Print "Packet Number OK!"
     Else
-        Debug.Print "Packet Number is " + PacketNumber
+        Debug.Print "Packet Number is wrong" + PacketNumber
+        Text1.Text = Text1.Text + "Packet Number is wrong" + PacketNumber + vbCrLf
+        fMain.MSComm1.Output = Chr(NAK)
+        Retry = 0
+        GoTo Riprova2
+
     End If
     
     If PacketNumber2 = 255 Then
         Debug.Print "Packet Number2 OK!"
     Else
-        Debug.Print "Packet Number2 is " + PacketNumber2
+        Debug.Print "Packet Number2 is wrong " + PacketNumber2
+        Text1.Text = Text1.Text + "Packet Number2 is wrong " + PacketNumber2 + vbCrLf
+        fMain.MSComm1.Output = Chr(NAK)
+        Retry = 0
+        GoTo Riprova2
     End If
 
     PacketData = Mid(Packet, 4, 128)
@@ -222,46 +251,24 @@ Riprova2:
     CRClo = GetByte(Packet, 133)
     Debug.Print "CRChi is "; CRChi
     Debug.Print "CRClo is "; CRClo
-    CRCPacket = CLng(CRChi) * 255 + CRClo
+    CRCPacket = CLng(CRChi) * 256 + CRClo
     Debug.Print "CRC Packet is "; CRCPacket
     CRC16Setup
     CRCPacketCalc = CRC16(PacketData)
     Debug.Print "CRC calculated with CRC16 is "; CRCPacketCalc
-    CRCPacketCalc = CRC16ter(PacketData)
-    Debug.Print "CRC calculated with CRC16ter is "; CRCPacketCalc
-    CRCPacketCalc = CRC16A(PacketData)
-    Debug.Print "CRC calculated with CRC16a is "; CRCPacketCalc
-    CRCPacketCalc = CalcCRC(PacketData)
-    Debug.Print "CRC calculated with CalcCrc is "; CRCPacketCalc
-
-
-    
-'    PacketData = Chr(PacketNumber) + Chr(PacketNumber2) + PacketData
-'    Debug.Print "Now packet is PacketNumber + data"
-'    CRC16Setup
-'    CRCPacketCalc = CRC16(PacketData)
-'    Debug.Print "CRC calculated with CRC16 is "; CRCPacketCalc
 '    CRCPacketCalc = CRC16ter(PacketData)
 '    Debug.Print "CRC calculated with CRC16ter is "; CRCPacketCalc
 '    CRCPacketCalc = CRC16A(PacketData)
 '    Debug.Print "CRC calculated with CRC16a is "; CRCPacketCalc
-'
-'    PacketData = Chr(FirstByte) + PacketData
-'    Debug.Print "Now packet is firstbyte + PacketNumber + data"
-'    CRC16Setup
-'    CRCPacketCalc = CRC16(PacketData)
-'    Debug.Print "CRC calculated with CRC16 is "; CRCPacketCalc
-'    CRCPacketCalc = CRC16ter(PacketData)
-'    Debug.Print "CRC calculated with CRC16ter is "; CRCPacketCalc
-'    CRCPacketCalc = CRC16A(PacketData)
-'    Debug.Print "CRC calculated with CRC16a is "; CRCPacketCalc
+'    CRCPacketCalc = CalcCRC(PacketData)
+'    Debug.Print "CRC calculated with CalcCrc is "; CRCPacketCalc
 
-
-'    If CRCPacketCalc < 0 Then
-'        CRCPacketCalc = CRCPacketCalc + 65535
-'    End If
-'    Debug.Print "CRC calculated is "; CRCPacketCalc
+   
     'check CRC
+    If CRCPacket <> CRCPacketCalc Then
+        Debug.Print "CRC failed!!"
+    
+    End If
     
     labPacket.Caption = Str(PacketNumber)
     
@@ -292,6 +299,8 @@ Riprova2:
     Text1.Text = Text1.Text + "First packet is ok." + vbCrLf + "Getting file." + vbCrLf
     'Receive next packets
     Retry = 0
+    lRetry.Caption = Str(Retry)
+
     fMain.MSComm1.Output = Chr(ACK)
     fMain.MSComm1.Output = STARTY
     PacketNumProx = 1
@@ -335,6 +344,8 @@ ciclo1:
         Exit Sub
     End If
     
+Riprova3:
+
     If lPacketUsed = 128 Then
         Packet = ReceivePacket128
     Else
@@ -344,7 +355,22 @@ ciclo1:
     lPacket = Len(Packet)
     Debug.Print "Received "; lPacket
 
-    
+    If lPacketUsed = 128 Then
+        If lPacket < 132 Then
+            Debug.Print " packet too short"; lPacket
+            fMain.MSComm1.Output = Chr(NAK)
+            GoTo Riprova3
+
+        End If
+    Else
+        If lPacket < 1028 Then
+            Debug.Print " packet too short"; lPacket
+            fMain.MSComm1.Output = Chr(NAK)
+            GoTo Riprova3
+        End If
+
+    End If
+   
     
     
     'This can change during transmission!!!
@@ -386,13 +412,13 @@ ciclo1:
 
     Else
         'Packet is 128 long
-        CRChi = GetByte(Packet, 132)
-        CRClo = GetByte(Packet, 133)
+        CRChi = GetByte(Packet, 131)
+        CRClo = GetByte(Packet, 132)
     End If
 
     
     'check CRC
-    CRCPacket = CLng(CRChi) * 255 + CRClo
+    CRCPacket = CLng(CRChi) * 256 + CRClo
     Debug.Print "CRC Packet is "; CRCPacket
     CRC16Setup
     CRCPacketCalc = CRC16(PacketData)
@@ -423,13 +449,13 @@ End Sub
 
 Private Function ReceivePacket128() As String
     Dim Packet As String
-    ReceivePacket128 = InputComTimeOutBin(3, 133)
+    ReceivePacket128 = InputComTimeOutBin(5, 133)
     'Debug.Print "inputCom--->"; Char2ascii(ReceivePacket128)
 End Function
 
 Private Function ReceivePacket1024() As String
     Dim Packet As String
-    ReceivePacket1024 = InputComTimeOutBin(3, 1028)
+    ReceivePacket1024 = InputComTimeOutBin(5, 1028)
     'Debug.Print "inputCom--->"; Char2ascii(ReceivePacket128)
 End Function
 
@@ -452,6 +478,11 @@ Private Function GetByte(Stringa As String, Position As Long) As Byte
         GetByte = 0
         Exit Function
     End If
+    If Position > Len(Stringa) Then
+        GetByte = 0
+        Exit Function
+    End If
+    
     GetByte = Asc(Mid(Stringa, Position, 1))
 End Function
 

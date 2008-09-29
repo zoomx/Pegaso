@@ -14,7 +14,7 @@ Begin VB.Form fModem
    ScaleWidth      =   4680
    StartUpPosition =   2  'CenterScreen
    Begin VB.CommandButton bRubrica 
-      Caption         =   "&Rubrica"
+      Caption         =   "Address &Book"
       Height          =   500
       Left            =   1800
       TabIndex        =   13
@@ -47,7 +47,7 @@ Begin VB.Form fModem
       End
    End
    Begin VB.CommandButton bAnnulla 
-      Caption         =   "&Annulla"
+      Caption         =   "&Abort"
       Height          =   500
       Left            =   3480
       TabIndex        =   8
@@ -55,7 +55,7 @@ Begin VB.Form fModem
       Width           =   1005
    End
    Begin VB.CommandButton bChiama 
-      Caption         =   "&Chiama"
+      Caption         =   "&Call"
       Height          =   500
       Left            =   120
       TabIndex        =   7
@@ -491,12 +491,14 @@ Retry:
             DiffTempo = Timer - Tempo0
         End If
         Debug.Print DiffTempo
+        Label1.Caption = Label1.Caption & Str(DiffTempo) & " "
         GoTo Retry
     End If
     
     'Risposta = Left(Risposta, Len(Risposta) - 2)
     Messaggio = risposta
     risposta = Left(risposta, 4)
+    Label1.Caption = Label1.Caption & vbCrLf
     fMain.Text1.Text = fMain.Text1.Text + risposta + vbCrLf
     Select Case risposta
         Case "CONNECT"

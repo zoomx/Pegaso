@@ -31,7 +31,7 @@ Begin VB.Form fRubrica
       Width           =   1245
    End
    Begin VB.CommandButton CmdAnnulla 
-      Caption         =   "&Annulla"
+      Caption         =   "&Abort"
       BeginProperty Font 
          Name            =   "MS Sans Serif"
          Size            =   8.25

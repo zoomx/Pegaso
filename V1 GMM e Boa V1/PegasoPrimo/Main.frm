@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "ComDlg32.OCX"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Object = "{648A5603-2C6E-101B-82B6-000000000014}#1.1#0"; "MSCOMM32.OCX"
 Begin VB.Form fMain 
    Caption         =   "Pegaso I"
@@ -12,12 +12,21 @@ Begin VB.Form fMain
    ScaleHeight     =   6375
    ScaleWidth      =   8820
    StartUpPosition =   2  'CenterScreen
+   Begin VB.CommandButton bFindModem2 
+      Caption         =   "FindModem2"
+      Height          =   375
+      Left            =   240
+      TabIndex        =   22
+      Top             =   6000
+      Width           =   1215
+   End
    Begin VB.CommandButton bCrcTest 
       Caption         =   "CRC test"
       Height          =   495
       Left            =   3600
       TabIndex        =   21
       Top             =   5640
+      Visible         =   0   'False
       Width           =   855
    End
    Begin VB.CommandButton bClear 
@@ -142,7 +151,7 @@ Begin VB.Form fMain
       Height          =   495
       Left            =   240
       TabIndex        =   7
-      Top             =   5760
+      Top             =   5400
       Width           =   1215
    End
    Begin VB.CommandButton bModem 
@@ -301,7 +310,8 @@ Private Sub bCrcTest_Click()
     Debug.Print "crc16a(" & sMessage & ")=" & Hex(iCRC) & " BB3D"
     iCRC = CalcCRC(sMessage)
     Debug.Print "CalcCRC(" & sMessage & ")=" & Hex(iCRC) & " BB3D"
-
+    iCRC = GetCrc32(sMessage)
+    Debug.Print "GetCrc32(" & sMessage & ")=" & Hex(iCRC) & " BB3D"
 
 End Sub
 
@@ -314,6 +324,12 @@ End Sub
 Private Sub bFindModem_Click()
     Me.Hide
     fFindModem.Show
+End Sub
+
+Private Sub bFindModem2_Click()
+    Me.Hide
+    FindModem.Show
+
 End Sub
 
 Private Sub bGetCurrentData_Click()
@@ -417,9 +433,10 @@ Private Sub bConnect_Click()
     Dim Stringa As String
     Dim Retry As Byte
     Retry = 1
+WakeUp:
     'Wake up
     MSComm1.Output = "W"
-    Text1.Text = Text1.Text + "Connectin GMM " + Stringa + vbCrLf
+    Text1.Text = Text1.Text + "Connecting GMM " + Stringa + vbCrLf
     Stringa = InputComTimeOut(5) 'First line is a blank
     Stringa = InputComTimeOut(5) 'Here is the answer
     If Stringa = "TimeOut" Then
@@ -429,6 +446,7 @@ Private Sub bConnect_Click()
             Text1.Text = Text1.Text + "No answer from GMM aborting" + vbCrLf
         Else
             Text1.Text = Text1.Text + "No answer retrying " + Str(Retry) + vbCrLf
+            GoTo WakeUp
         End If
     End If
     If Left(Stringa, 3) <> "GMM" Then
