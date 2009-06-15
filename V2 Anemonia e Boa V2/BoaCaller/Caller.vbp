@@ -1,7 +1,8 @@
 Type=Exe
 Form=fMain.frm
-Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\..\..\..\WINDOWS\system32\stdole2.tlb#OLE Automation
+Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#C:\winnt\system32\stdole2.tlb#OLE Automation
 Module=FunzioniBoa; FunzioniBoa.bas
+Module=BuoyFunctions; BuoyFunctions.bas
 IconForm="fMain"
 Startup="fMain"
 HelpFile=""
