@@ -210,130 +210,131 @@ Public Function ParseLine2(Linea As String) As String
     ParseLine2 = ""
     
     'Day
-    Stringbuffer = Left(Linea, 2)
+    Stringbuffer = Left(Linea, 4)
     'Debug.Print "Stringbuffer="; StringBuffer
-    Stringbuffer = HexToDecAscii(Stringbuffer)
+    Stringbuffer = HexToDecAscii2(Stringbuffer)
     'Debug.Print StringBuffer
     DateDay = ZeroPad(Stringbuffer)
     
     'Month
-    Stringbuffer = Mid(Linea, 3, 2)
+    Stringbuffer = Mid(Linea, 5, 4)
     'Debug.Print "Stringbuffer="; StringBuffer
-    Stringbuffer = HexToDecAscii(Stringbuffer)
+    Stringbuffer = HexToDecAscii2(Stringbuffer)
     'Debug.Print StringBuffer
     DateMonth = ZeroPad(Stringbuffer)
     
     'Year
-    Stringbuffer = Mid(Linea, 5, 2)
-    Stringbuffer = HexToDecAscii(Stringbuffer)
+    Stringbuffer = Mid(Linea, 9, 4)
+    Stringbuffer = HexToDecAscii2(Stringbuffer)
     DateYear = "20" + ZeroPad(Stringbuffer)
+    If Val(DateYear) > (Year(Now) + 1) Then DateYear = Year(Now)        'Problemi con il 31 dicembre. Forse risolto!
     
     'Hour
-    Stringbuffer = Mid(Linea, 7, 2)
-    Stringbuffer = HexToDecAscii(Stringbuffer)
+    Stringbuffer = Mid(Linea, 13, 4)
+    Stringbuffer = HexToDecAscii2(Stringbuffer)
     DateHour = ZeroPad(Stringbuffer)
 
     'Minute
-    Stringbuffer = Mid(Linea, 9, 2)
-    Stringbuffer = HexToDecAscii(Stringbuffer)
+    Stringbuffer = Mid(Linea, 17, 4)
+    Stringbuffer = HexToDecAscii2(Stringbuffer)
     DateMin = ZeroPad(Stringbuffer)
     
     'Seconds
-    Stringbuffer = Mid(Linea, 11, 2)
-    Stringbuffer = HexToDecAscii(Stringbuffer)
+    Stringbuffer = Mid(Linea, 21, 4)
+    Stringbuffer = HexToDecAscii2(Stringbuffer)
     DateSec = ZeroPad(Stringbuffer)
 
     'T1
-    Stringbuffer = Mid(Linea, 13, 4)
-    Stringbuffer = HexToDecAscii(Stringbuffer)
+    Stringbuffer = Mid(Linea, 25, 8)
+    Stringbuffer = HexToDecAscii3(Stringbuffer)
     T1 = Val(Stringbuffer) / 10
     
     'T2
-    Stringbuffer = Mid(Linea, 17, 4)
-    Stringbuffer = HexToDecAscii(Stringbuffer)
+    Stringbuffer = Mid(Linea, 33, 8)
+    Stringbuffer = HexToDecAscii3(Stringbuffer)
     T2 = Val(Stringbuffer) / 10
     
     'T3
-    Stringbuffer = Mid(Linea, 21, 4)
-    Stringbuffer = HexToDecAscii(Stringbuffer)
+    Stringbuffer = Mid(Linea, 41, 8)
+    Stringbuffer = HexToDecAscii3(Stringbuffer)
     T3 = Val(Stringbuffer) / 10
     
     'MeteoWindSpeed
-    Stringbuffer = Mid(Linea, 25, 4)
-    StringBuffer2 = Right(Stringbuffer, 2) & Left(Stringbuffer, 2)
-    Stringbuffer = HexToDecAscii(StringBuffer2)
+    Stringbuffer = Mid(Linea, 49, 8)
+    'StringBuffer2 = Right(Stringbuffer, 2) & Left(Stringbuffer, 2)
+    Stringbuffer = HexToDecAscii3(StringBuffer2)
     MeteoWindSpeed = Val(Stringbuffer) * 1.852 / 10
     
     'MeteoWindDirection
-    Stringbuffer = Mid(Linea, 29, 4)
-    StringBuffer2 = Right(Stringbuffer, 2) & Left(Stringbuffer, 2)
-    Stringbuffer = HexToDecAscii(StringBuffer2)
+    Stringbuffer = Mid(Linea, 57, 8)
+    'StringBuffer2 = Right(Stringbuffer, 2) & Left(Stringbuffer, 2)
+    Stringbuffer = HexToDecAscii3(StringBuffer2)
     MeteoWindDirection = Val(Stringbuffer) / 10
     
     'GPS_Lat
-    Stringbuffer = Mid(Linea, 33, 8)
+    Stringbuffer = Mid(Linea, 65, 16)
     'StringBuffer2 = Right(StringBuffer, 2) & Mid
-    Stringbuffer = HexToDecAscii(StringBuffer2)
+    Stringbuffer = HexToDecAscii3(StringBuffer2)
     GPS_Lat = Val(Stringbuffer) / 10000000
     
     'GPS_LatDir
-    Stringbuffer = Mid(Linea, 41, 2)
-    Stringbuffer = HexToDecAscii(Stringbuffer)
+    Stringbuffer = Mid(Linea, 81, 4)
+    Stringbuffer = HexToDecAscii2(Stringbuffer)
     GPS_LatDir = Val(Stringbuffer)
     
     'GPS_Lon
-    Stringbuffer = Mid(Linea, 43, 8)
-    Stringbuffer = HexToDecAscii(Stringbuffer)
+    Stringbuffer = Mid(Linea, 85, 16)
+    Stringbuffer = HexToDecAscii3(Stringbuffer)
     GPS_Lon = Val(Stringbuffer) / 10000000
     
     'GPS_LonDir
-    Stringbuffer = Mid(Linea, 51, 2)
-    Stringbuffer = HexToDecAscii(Stringbuffer)
+    Stringbuffer = Mid(Linea, 101, 4)
+    Stringbuffer = HexToDecAscii2(Stringbuffer)
     GPS_LonDir = Val(Stringbuffer)
     
     'GPS_SatUsed
-    Stringbuffer = Mid(Linea, 53, 2)
-    Stringbuffer = HexToDecAscii(Stringbuffer)
+    Stringbuffer = Mid(Linea, 105, 4)
+    Stringbuffer = HexToDecAscii2(Stringbuffer)
     GPS_LonDir = Val(Stringbuffer)
    
     'MonitorBattery_3_12V
-    Stringbuffer = Mid(Linea, 55, 2)
-    Stringbuffer = HexToDecAscii(Stringbuffer)
+    Stringbuffer = Mid(Linea, 109, 4)
+    Stringbuffer = HexToDecAscii2(Stringbuffer)
     MonitorBattery_3_12V = Val(Stringbuffer) / 10
     
     'MonitorBattery_2_12V
-    Stringbuffer = Mid(Linea, 57, 2)
-    Stringbuffer = HexToDecAscii(Stringbuffer)
+    Stringbuffer = Mid(Linea, 113, 4)
+    Stringbuffer = HexToDecAscii2(Stringbuffer)
     MonitorBattery_2_12V = Val(Stringbuffer) / 10
     
     'MonitorBattery_1_12V
-    Stringbuffer = Mid(Linea, 59, 2)
-    Stringbuffer = HexToDecAscii(Stringbuffer)
+    Stringbuffer = Mid(Linea, 117, 4)
+    Stringbuffer = HexToDecAscii2(Stringbuffer)
     MonitorBattery_1_12V = Val(Stringbuffer) / 10
     
     'AX
-    Stringbuffer = Mid(Linea, 61, 4)
-    Stringbuffer = HexToDecAscii(Stringbuffer)
+    Stringbuffer = Mid(Linea, 121, 8)
+    Stringbuffer = HexToDecAscii2(Stringbuffer)
     AX = Val(Stringbuffer) / 1000
     
     'AY
-    Stringbuffer = Mid(Linea, 65, 4)
-    Stringbuffer = HexToDecAscii(Stringbuffer)
+    Stringbuffer = Mid(Linea, 129, 8)
+    Stringbuffer = HexToDecAscii2(Stringbuffer)
     AY = Val(Stringbuffer) / 1000
 
     'AZ
-    Stringbuffer = Mid(Linea, 69, 4)
-    Stringbuffer = HexToDecAscii(Stringbuffer)
+    Stringbuffer = Mid(Linea, 137, 8)
+    Stringbuffer = HexToDecAscii2(Stringbuffer)
     AZ = Val(Stringbuffer) / 1000
     
     'H20_1
-    Stringbuffer = Mid(Linea, 73, 2)
-    Stringbuffer = HexToDecAscii(Stringbuffer)
+    Stringbuffer = Mid(Linea, 145, 4)
+    Stringbuffer = HexToDecAscii2(Stringbuffer)
     H20_1 = Val(Stringbuffer) / 10
 
     'H20_2
-    Stringbuffer = Mid(Linea, 75, 2)
-    Stringbuffer = HexToDecAscii(Stringbuffer)
+    Stringbuffer = Mid(Linea, 149, 4)
+    Stringbuffer = HexToDecAscii2(Stringbuffer)
     H20_1 = Val(Stringbuffer) / 10
     
    
@@ -363,6 +364,46 @@ Public Function HexToDecAscii(Stringa As String) As String
     Stringa = "&H" & Stringa
     Intero = Val(Stringa)
     HexToDecAscii = Trim(Str(Intero))
+End Function
+
+Public Function HexToDecAscii2(Stringa As String) As String
+    'Converte una stringa di Hex in Ascii in una stringa di decimali
+    Dim LenghtStringa As Integer
+    Dim Intero As Long
+    Dim Char1 As String
+    Dim Char2 As String
+    
+    SubName = "HexToDecAscii2"
+    
+    Char1 = "&H" + SwapString(Left(Stringa, 2))
+    Char2 = "&H" + SwapString(Right(Stringa, 2))
+    
+    'LenghtStringa = Len(Stringa)
+    Stringa = "&H" + Chr(Val(Char1)) + Chr(Val(Char2))
+    Intero = Val(Stringa)
+    HexToDecAscii2 = Trim(Str(Intero))
+End Function
+
+Public Function HexToDecAscii3(Stringa As String) As String
+    'Converte una stringa di Hex in Ascii in una stringa di decimali
+    Dim LenghtStringa As Integer
+    Dim Intero As Long
+    Dim Char1 As String
+    Dim Char2 As String
+    Dim Char3 As String
+    Dim Char4 As String
+    
+    SubName = "HexToDecAscii3"
+    
+    Char1 = "&H" + SwapString(Left(Stringa, 2))
+    Char2 = "&H" + SwapString(Mid(Stringa, 3, 2))
+    Char3 = "&H" + SwapString(Mid(Stringa, 5, 2))
+    Char4 = "&H" + SwapString(Right(Stringa, 2))
+    
+    'LenghtStringa = Len(Stringa)
+    Stringa = "&H" + Chr(Val(Char1)) + Chr(Val(Char2)) + Chr(Val(Char3)) + Chr(Val(Char4))
+    Intero = Val(Stringa)
+    HexToDecAscii3 = Trim(Str(Intero))
 End Function
 
 Public Function ZeroPad(Stringa As String) As String
@@ -858,6 +899,7 @@ Public Function CallNumber(Number As String) As Boolean
     CallNumber = False
 
     'Setta la COM
+    If fMain.MSComm1.PortOpen = True Then fMain.MSComm1.PortOpen = False
     fMain.MSComm1.CommPort = CommPort
     fMain.MSComm1.Settings = CommSettings
     fMain.MSComm1.Handshaking = comRTS
@@ -956,4 +998,36 @@ End Function
 Function IntBigE(strTwoChars As String) As Integer
     SubName = "IntBigE"
     IntBigE = Asc(Mid$(strTwoChars, 1, 1)) * 2 ^ 8 + Asc(Mid$(strTwoChars, 2, 1))
+End Function
+
+Public Function TranscodeLine(Stringa As String) As String
+    Dim i As Integer
+    Dim Intero As Integer
+    Dim FileN As Long
+    Dim FileName As String
+    Dim Carattere As String
+    Dim Char1 As String
+    Dim Char2 As String
+    
+    'FileName = App.Path + "\" + "File3.txt"
+    'FileN = FreeFile
+    'Open FileName For Output As #FileN
+
+    TranscodeLine = ""
+    For i = 1 To Len(Stringa) Step 2
+        'TranscodeLine = TranscodeLine + Chr(Val(Mid(Stringa, i, 1)))
+        'TranscodeLine = TranscodeLine + Chr(Val(Mid(Stringa, i, 2)))
+        Char1 = Mid(Stringa, i, 1)
+        Char2 = Mid(Stringa, i + 1, 1)
+        Carattere = Char2 + Char1
+        'Print #FileN, Carattere
+        Carattere = HexToDecAscii(Carattere)
+        'Print #FileN, Val(Carattere)
+        Intero = Val(Carattere)
+        'Print #FileN, Chr(Val(Mid(Stringa, i, 2)))
+        'Print #FileN, Chr(Intero)
+        TranscodeLine = TranscodeLine + Chr(Intero)
+    Next i
+    'Close #FileN
+    'End
 End Function
