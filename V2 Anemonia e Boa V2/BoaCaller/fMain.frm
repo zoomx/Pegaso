@@ -171,6 +171,8 @@ Private Sub bDownload_Click()
 
     Connected = AllOk
     
+    bDownload.Enabled = False
+    
     If Connected = False Then GoTo Closing  'Si potrebbe fare meglio
 
     Chiamate = 1
@@ -229,7 +231,7 @@ Private Sub bDownload_Click()
     'Controllare che la data sia quella di oggi
     
     'Calcola l'ultimo file chiuso
-    LastIDtoDownload = ActualID - 1
+    LastIDtoDownload = ActualID - 1                                    '***********************************************
     If LastIDtoDownload <= 0 Then LastIDtoDownload = 30
     
     FilePrefix = ""
@@ -308,10 +310,10 @@ Private Sub bDownload_Click()
         
         If Connected = True And Len(Risposta) > 50 Then 'se siamo ancora in linea è la risposta è lunga abbastanza...
             'Lo unisco al resto togliendo i due byte iniziali e i due byte finali.
-            FileBuffer = FileBuffer + Mid(Risposta, 4, Len(Risposta) - 4)
-            FileBuffer2 = FileBuffer2 + Mid(Risposta, 2, Len(Risposta) - 4)
+            'FileBuffer = FileBuffer + Mid(Risposta, 4, Len(Risposta) - 4)
+            'FileBuffer2 = FileBuffer2 + Mid(Risposta, 2, Len(Risposta) - 4)
             FileBuffer3 = FileBuffer3 + Mid(Risposta, 3, Len(Risposta) - 4) 'il migliore
-            FileBuffer4 = FileBuffer4 + Mid(Risposta, 3, 608)
+            'FileBuffer4 = FileBuffer4 + Mid(Risposta, 3, 608)
             
             'calcolo quante linee ho scaricato
             RowsGot = RowsGot + RowsNumber
@@ -352,17 +354,18 @@ Private Sub bDownload_Click()
         FileName = App.Path + "\" + FilePrefix + "File.txt"
         FileN = FreeFile
         Open FileName For Output As #FileN
-        Print #FileN, FileBuffer
-        Print #FileN, "-------------------------------------------------------------------------------------------------"
-        Print #FileN, FileBuffer2
-        Print #FileN, "-------------------------------------------------------------------------------------------------"
-        Print #FileN, FileBuffer3
-        Print #FileN, "-------------------------------------------------------------------------------------------------"
+        'Print #FileN, FileBuffer
+        'Print #FileN, "-------------------------------------------------------------------------------------------------"
+        'Print #FileN, FileBuffer2
+        'Print #FileN, "-------------------------------------------------------------------------------------------------"
+        Print #FileN, FileBuffer3;
+        'Print #FileN, "-------------------------------------------------------------------------------------------------"
         Close FileN
     End If
     Close FileN2
     
 Closing:
+    bDownload.Enabled = True
     'Chiude la porta
     MSComm1.PortOpen = False
     lMonitor.Caption = lMonitor.Caption + vbCrLf + "Closing COM port"
@@ -383,6 +386,8 @@ Private Sub bTranscode_Click()
     
     SubName = "bTranscode_Click"
     
+    bTranscode.Enabled = False
+    
     FileName = App.Path + "\" + "1.log"
     Open FileName For Input As #1
     Line Input #1, LineBuffer
@@ -399,6 +404,7 @@ Private Sub bTranscode_Click()
         Print #1, Linea
     Next LineCount
     Close 1
+    bTranscode.Enabled = True
 End Sub
 
 Private Sub bTest_Click()
@@ -557,18 +563,20 @@ Private Sub bTranscode2_Click()
     
     SubName = "bTranscode2_Click"
     
-    FileName = App.Path + "\" + "6File.txt"
+    bTranscode2.Enabled = False
+    
+    FileName = App.Path + "\" + "20090722_101929_15File.txt"
     FileN = FreeFile
     Open FileName For Input As #FileN
     Line Input #1, LineBuffer
     Debug.Print Len(LineBuffer)
     Close 1
     'Exit Sub
-    FileName = App.Path + "\" + "6file.csv"
+    FileName = App.Path + "\" + "20090722_101929_15File.txt.csv"
     FileN = FreeFile
     Open FileName For Output As #FileN
     
-    FileName = App.Path + "\" + "6file2.txt"
+    FileName = App.Path + "\" + "20090722_101929_15File.txt2.txt"
     FileN2 = FreeFile
     Open FileName For Output As #FileN2
 
@@ -592,4 +600,5 @@ Private Sub bTranscode2_Click()
     Close FileN
     Close FileN2
 
+    bTranscode2.Enabled = True
 End Sub

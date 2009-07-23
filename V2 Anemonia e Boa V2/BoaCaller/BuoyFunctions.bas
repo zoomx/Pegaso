@@ -517,7 +517,11 @@ Public Function SendPacketDownloadRequest(ID As Long, RowsNumber As Byte, RowInd
     For i = 0 To 11
         Checksum = Checksum + Packet(i)
     Next
-    Packet(12) = 256 - (Checksum Mod 256)
+    If Checksum Mod 256 <> 0 Then
+        Packet(12) = 256 - (Checksum Mod 256)
+    Else
+        Packet(12) = 0
+    End If
     Packet(13) = 0
 
 '    For i = 0 To 13
@@ -946,6 +950,7 @@ retry:
             DiffTempo = Timer - Tempo0
         End If
         Debug.Print DiffTempo
+        fMain.lMonitor.Caption = fMain.lMonitor.Caption + vbCrLf + Str(DiffTempo)
         GoTo retry
     End If
     'Risposta = Left(Risposta, Len(Risposta) - 2)
