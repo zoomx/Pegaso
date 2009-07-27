@@ -1,5 +1,6 @@
 VERSION 5.00
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
+Object = "{648A5603-2C6E-101B-82B6-000000000014}#1.1#0"; "MSCOMM32.OCX"
 Begin VB.Form t2s 
    Caption         =   "t2s"
    ClientHeight    =   3495
@@ -10,6 +11,14 @@ Begin VB.Form t2s
    ScaleHeight     =   3495
    ScaleWidth      =   8205
    StartUpPosition =   3  'Windows Default
+   Begin MSCommLib.MSComm MSComm1 
+      Left            =   5160
+      Top             =   1200
+      _ExtentX        =   1005
+      _ExtentY        =   1005
+      _Version        =   393216
+      DTREnable       =   -1  'True
+   End
    Begin VB.CommandButton Command1 
       Caption         =   "GET DATA"
       Height          =   375
@@ -97,6 +106,8 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Option Explicit
+
 Dim CloseFile As String
 Dim Filopen As Boolean
 Dim FileNumber As Integer
@@ -142,6 +153,10 @@ Private Sub Command1_Click()
     Dim FineBuffer As Boolean
     Dim counter As Integer
 
+    'MSComm1.CommPort = 1
+    'MSComm1.Handshaking = comNone
+    'MSComm1.PortOpen = True
+
     FileName = App.Path + "\" + GeneraNome + "logs.txt"
     FileNumber = 1
     
@@ -154,16 +169,22 @@ Private Sub Command1_Click()
     Filopen = True
     
     SOCK.SendData GetAlive
+    'MSComm1.Output = GetAlive
+    
     Debug.Print "getting alive"
+    
     Debug.Print Buffer
     Sleep 1000
     
     SOCK.SendData GetAlive
+    'MSComm1.Output = GetAlive
+
     Debug.Print "getting alive"
     Debug.Print Buffer
     Sleep 1000
     
     SOCK.SendData Openfile
+    'MSComm1.Output = Openfile
     Debug.Print "OpenFile"
     Sleep 1000
     'wait
@@ -171,11 +192,16 @@ Private Sub Command1_Click()
     StopAll = True
     Do
         DoEvents
-        'Debug.Print "getting frame"
-        'SOCK.SendData Continue
-'        Buffer = InputComTimeOutTerm(10, 62)
-'        Debug.Print Buffer
+        Debug.Print "getting frame"
+        SOCK.SendData Continue
+        'MSComm1.Output = Continue
+        'Buffer = InputComTimeOutTerm(10, 62)
+        Sleep 1000
+        'Buffer = MSComm1.Input
+        
+        Debug.Print Buffer
         If Buffer <> "" Then
+            Print #FileNumber, Buffer
             Buffer = Left(Buffer, Len(Buffer) - 1)
         End If
         If Buffer = "E07" Then
