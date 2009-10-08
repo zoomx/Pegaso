@@ -565,18 +565,18 @@ Private Sub bTranscode2_Click()
     
     bTranscode2.Enabled = False
     
-    FileName = App.Path + "\" + "20090722_101929_15File.txt"
+    FileName = App.Path + "\" + "20091006_105558_12File.txt"
     FileN = FreeFile
     Open FileName For Input As #FileN
     Line Input #1, LineBuffer
     Debug.Print Len(LineBuffer)
     Close 1
     'Exit Sub
-    FileName = App.Path + "\" + "20090722_101929_15File.txt.csv"
+    FileName = App.Path + "\" + "20091006_105558_12File.txt.csv"
     FileN = FreeFile
     Open FileName For Output As #FileN
     
-    FileName = App.Path + "\" + "20090722_101929_15File.txt2.txt"
+    FileName = App.Path + "\" + "20091006_105558_12File.txt2.txt"
     FileN2 = FreeFile
     Open FileName For Output As #FileN2
 
